@@ -18,10 +18,38 @@ class DefaultControllerTest extends TodoWebTestCase
                     "parameters" => [],
                     "files" => [],
                     "server" => [],
-                    "authenticated" => false,
+                    "authenticated" => null,
                     "content" => "",
                     "expectedCode" => Response::HTTP_FOUND,
                     "needReturnOnOK" => true,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testShowHomeAsUser" => [
+                [
+                    "type" => "GET",
+                    "url" => "/",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => "USER",
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_OK,
+                    "needReturnOnOK" => false,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testShowHomeAsAdmin" => [
+                [
+                    "type" => "GET",
+                    "url" => "/",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => "ADMIN",
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_OK,
+                    "needReturnOnOK" => false,
                     "additionalCheck" => "checkShowDetailsTokenOkIdOk"
                 ]
             ]

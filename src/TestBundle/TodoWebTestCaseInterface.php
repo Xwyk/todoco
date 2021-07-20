@@ -11,6 +11,7 @@ interface TodoWebTestCaseInterface
         $type,
         $url,
         $expectedCode,
+        $authenticated = null,
         $parameters = [],
         $files = [],
         $server = [],

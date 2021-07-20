@@ -1,18 +1,34 @@
 <?php
 
 namespace Tests\AppBundle\Controller;
+use TestBundle\TodoWebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class DefaultControllerTest extends TodoWebTestCase
 {
-    public function testIndex()
+    public function loadEntryPoints()
     {
-        $client = static::createClient();
+        return [
+            "testShowHomeNotLogged" => [
+                [
+                    "type" => "GET",
+                    "url" => "/",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => false,
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_FOUND,
+                    "needReturnOnOK" => true,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ]
+        ];
+    }
 
-        $crawler = $client->request('GET', '/');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Welcome to Symfony', $crawler->filter('#container h1')->text());
+    public function checkShowDetailsTokenOkIdOk($result){
+        dump(($result));
     }
 }

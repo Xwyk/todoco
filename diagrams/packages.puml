@@ -1,0 +1,13 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+package "Application" {
+  [Tasks Management]
+  [Users Management]
+  [Authentication]
+}
+
+[Tasks Management] ..> [Authentication] : extends
+[Users Management] ..> [Authentication] : extends
+
+@enduml

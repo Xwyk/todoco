@@ -1,0 +1,16 @@
+@startuml
+
+left to right direction
+
+
+User    <<operator>> as user
+
+rectangle "Authentication" {
+  (Login) as auth
+  (Register) as reg
+}
+
+user --> auth
+user --> reg
+
+@enduml

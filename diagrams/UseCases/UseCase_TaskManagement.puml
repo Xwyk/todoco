@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+
+User    <<operator>> as user
+
+rectangle "Products Management" {
+  (List tasks) as listTasks
+  (Get task details) as getDetails
+  (authentication) as auth
+}
+
+user --> listTasks
+user --> getDetails
+
+listTasks ..> auth : <<include>>
+getDetails ..> auth : <<include>>
+
+@enduml

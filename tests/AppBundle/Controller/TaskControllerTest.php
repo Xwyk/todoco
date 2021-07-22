@@ -6,11 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TaskControllerTest extends TodoWebTestCase
 {
-    const TASK_TO_CREATE = [
-        "title" => "Tâche de test",
-        "content" => "Contenu de la tâche"
-    ];
-    const DEFAULT_REAL_TASK_ID = 0;
+    const DEFAULT_REAL_TASK_ID = 1;
     const DEFAULT_BAD_TASK_ID = 10;
     const DEFAULT_FAKE_TASK_ID = 100;
     public function loadEntryPoints()
@@ -524,6 +520,6 @@ class TaskControllerTest extends TodoWebTestCase
     }
 
     public function checkShowDetailsTokenOkIdOk($result){
-        dump(($result));
+//        dump(($result));
     }
 }

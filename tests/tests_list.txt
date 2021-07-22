@@ -154,8 +154,8 @@ o:.y s-       `      ``        ..`    `         ``.      ``            //  `h   
  |     Not Logged              testGetTaskNotLogged                            401 |
  |     Logged as User                                                              |
  |         {id} exist                                                              |
- |             task € User     testGetTaskAsUserIdExistIsUser                  200 |
- |             task !€ User    testGetTaskAsUserIdExistIsntUser                403 |
+ |             task € User     testGetTaskAsUserIdExistBelongUser              200 |
+ |             task !€ User    testGetTaskAsUserIdExistNotBelongUser           403 |
  |         {id} doesn't exist  testGetTaskAsUserIdNotExist                     404 |
  |     Logged as Admin                                                             |
  |         {id} exist          testGetTaskAsAdminIdExist                       200 |
@@ -189,7 +189,7 @@ o:.y s-       `      ``        ..`    `         ``.      ``            //  `h   
  |                                                                                 |
  |                                 ---------------                                 |
  |                                                                                 |
- | DELETE /tasks/{id}/delete                                                       |
+ | DELETE /tasks/{id}                                                              |
  |     Not Logged              testDeleteTaskRequestNotLogged                  401 |
  |     Logged as User                                                              |
  |         {id} exist                                                              |

@@ -4,10 +4,15 @@ namespace Tests\AppBundle\Controller;
 use TestBundle\TodoWebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
 class TaskControllerTest extends TodoWebTestCase
 {
+    const TASK_TO_CREATE = [
+        "title" => "Tâche de test",
+        "content" => "Contenu de la tâche"
+    ];
+    const DEFAULT_REAL_TASK_ID = 1;
+    const DEFAULT_BAD_TASK_ID = 10;
+    const DEFAULT_FAKE_TASK_ID = 100;
     public function loadEntryPoints()
     {
         return [
@@ -25,7 +30,7 @@ class TaskControllerTest extends TodoWebTestCase
                     "additionalCheck" => "checkShowDetailsTokenOkIdOk"
                 ]
             ],
-            "testShowTasksLoggedAsUser" => [
+            "testShowTasksAsUser" => [
                 [
                     "type" => "GET",
                     "url" => "/tasks",
@@ -39,7 +44,7 @@ class TaskControllerTest extends TodoWebTestCase
                     "additionalCheck" => "checkShowDetailsTokenOkIdOk"
                 ]
             ],
-            "testShowTasksLoggedAsAdmin" => [
+            "testShowTasksAsAdmin" => [
                 [
                     "type" => "GET",
                     "url" => "/tasks",
@@ -49,6 +54,216 @@ class TaskControllerTest extends TodoWebTestCase
                     "authenticated" => "ADMIN",
                     "content" => "",
                     "expectedCode" => Response::HTTP_OK,
+                    "needReturnOnOK" => false,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testAddTasksRequestNotLoggedDataOK" => [
+                [
+                    "type" => "POST",
+                    "url" => "/tasks",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => null,
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_UNAUTHORIZED,
+                    "needReturnOnOK" => false,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testAddTasksRequestNotLoggedDataKO" => [
+                [
+                    "type" => "GET",
+                    "url" => "/POST",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => null,
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_UNAUTHORIZED,
+                    "needReturnOnOK" => false,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testAddTasksRequestAsUserDataOK" => [
+                [
+                    "type" => "POST",
+                    "url" => "/tasks",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => "USER",
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_CREATED,
+                    "needReturnOnOK" => false,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testAddTasksRequestAsUserDataKO" => [
+                [
+                    "type" => "POST",
+                    "url" => "/tasks",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => "USER",
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_UNPROCESSABLE_ENTITY,
+                    "needReturnOnOK" => false,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testAddTasksRequestAsAdminDataOK" => [
+                [
+                    "type" => "POST",
+                    "url" => "/tasks",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => "ADMIN",
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_CREATED,
+                    "needReturnOnOK" => false,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testAddTasksRequestAsAdminDataKO" => [
+                [
+                    "type" => "POST",
+                    "url" => "/tasks",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => "ADMIN",
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_UNPROCESSABLE_ENTITY,
+                    "needReturnOnOK" => false,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testAddTasksNotLogged" => [
+                [
+                    "type" => "GET",
+                    "url" => "/tasks/create",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => null,
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_FOUND,
+                    "needReturnOnOK" => false,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testAddTasksAsUser" => [
+                [
+                    "type" => "POST",
+                    "url" => "/tasks",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => "USER",
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_OK,
+                    "needReturnOnOK" => false,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testAddTasksAsAdmin" => [
+                [
+                    "type" => "POST",
+                    "url" => "/tasks",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => "ADMIN",
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_OK,
+                    "needReturnOnOK" => false,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testGetTaskNotLogged" => [
+                [
+                    "type" => "GET",
+                    "url" => "/tasks/".self::DEFAULT_REAL_TASK_ID,
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => null,
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_FOUND,
+                    "needReturnOnOK" => false,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testGetTaskAsUserIdExistBelongUser" => [
+                [
+                    "type" => "GET",
+                    "url" => "/tasks/".self::DEFAULT_REAL_TASK_ID,
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => "USER",
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_OK,
+                    "needReturnOnOK" => false,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testGetTaskAsUserIdExistNotBelongUser" => [
+                [
+                    "type" => "GET",
+                    "url" => "/tasks/".self::DEFAULT_BAD_TASK_ID,
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => "USER",
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_FORBIDDEN,
+                    "needReturnOnOK" => false,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testGetTaskAsUserIdNotExist" => [
+                [
+                    "type" => "GET",
+                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID,
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => "ADMIN",
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_NOT_FOUND,
+                    "needReturnOnOK" => false,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testGetTaskAsAdminIdExist" => [
+                [
+                    "type" => "GET",
+                    "url" => "/tasks/".self::DEFAULT_REAL_TASK_ID,
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => "ADMIN",
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_OK,
+                    "needReturnOnOK" => false,
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                ]
+            ],
+            "testGetTaskAsAdminIdNotExist" => [
+                [
+                    "type" => "GET",
+                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID,
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => "ADMIN",
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_NOT_FOUND,
                     "needReturnOnOK" => false,
                     "additionalCheck" => "checkShowDetailsTokenOkIdOk"
                 ]

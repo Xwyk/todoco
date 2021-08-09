@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TaskController extends Controller
 {
+    // @TODO add view task route
     /**
      * @Route("/tasks", name="task_list")
      */

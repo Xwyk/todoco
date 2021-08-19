@@ -20,7 +20,12 @@ security:
             security: false
         main:
             lazy: true
-            provider: users_in_memory
+            provider: database
+            custom_authenticator: App\Security\UserAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

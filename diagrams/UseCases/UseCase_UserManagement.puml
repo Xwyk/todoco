@@ -6,16 +6,13 @@ Admin    <<operator>> as admin
 
 rectangle "Users Management" {
   (List users) as listUsers
-  (Show user details) as showUser
   (Edit user details) as editUser
   (authentication) as auth
 }
 
 admin -> listUsers
-admin -> showUser
 admin -> editUser
 
-showUser ..> auth : <<include>>
 listUsers ..> auth : <<include>>
 editUser ..> auth : <<include>>
 

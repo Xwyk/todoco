@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=TaskRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Task
 {
@@ -53,11 +54,21 @@ class Task
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt = null): self
     {
+        if ($createdAt == null)
+            $createdAt = new \DateTimeImmutable();
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDate()
+    {
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getTitle(): ?string

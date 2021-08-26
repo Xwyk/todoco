@@ -12,7 +12,7 @@ use App\Entity\User;
 
 abstract class TodoWebTestCase extends WebTestCase implements TodoWebTestCaseInterface
 {
-    const defaultUserLogin = "user2";
+    const defaultUserLogin = "user1";
     const defaultUserPassword = "user1";
     const defaultAdminLogin = "admin2";
     const defaultAdminPassword = "admin1";

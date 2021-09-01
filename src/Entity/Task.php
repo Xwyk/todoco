@@ -40,7 +40,6 @@ class Task
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tasks")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $author;
 

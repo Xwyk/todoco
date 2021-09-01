@@ -32,7 +32,7 @@ class TaskController extends AbstractController
     }
 
     /**
-     * @Route("/tasks/create", name="task_create")
+     * @Route("/tasks/create", name="task_create", methods={"GET","POST"})
      * @isGranted("ROLE_USER")
      * @param Request $request
      * @param EntityManager $manager
@@ -55,7 +55,7 @@ class TaskController extends AbstractController
     }
 
     /**
-     * @Route("/tasks/{id}/edit", name="task_edit")
+     * @Route("/tasks/{id}/edit", name="task_edit", methods={"GET","POST"})
      * @isGranted("TASK_EDIT", subject="task")
      * @param Task $task
      * @param Request $request

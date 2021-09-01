@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TaskControllerTest extends TodoWebTestCase
 {
     const DEFAULT_REAL_TASK_ID = 1;
-    const DEFAULT_BAD_TASK_ID = 10;
+    const DEFAULT_BAD_TASK_ID = 2;
     const DEFAULT_FAKE_TASK_ID = 100;
     public function loadEntryPoints()
     {

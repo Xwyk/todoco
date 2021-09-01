@@ -45,6 +45,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity=Role::class, inversedBy="users")
+     * @var Role[]|Collection
      */
     private $roles;
 
@@ -127,7 +128,11 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
 
     public function getRoles()
     {
-        return ['ROLE_ADMIN'];
+        $roles = ($this->roles->toArray());
+        foreach ($roles as $role){
+            $roles = $role->__tostring();
+        }
+        return $roles;
     }
 
     public function getSalt()

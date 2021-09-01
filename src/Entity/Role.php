@@ -22,7 +22,7 @@ class Role
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -31,6 +31,7 @@ class Role
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="roles")
+     * @var User[]|Collection
      */
     private $users;
 
@@ -93,5 +94,10 @@ class Role
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

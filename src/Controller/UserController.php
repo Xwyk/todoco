@@ -55,7 +55,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/users/{id}/edit", name="user_edit")
-     * @isGranted("USER_EDIT")
+     * @isGranted("USER_EDIT", subject="user")
      */
     public function editAction(User $user, Request $request, UserPasswordHasherInterface $hasher)
     {

@@ -40,8 +40,14 @@ class UserVoter extends Voter
         switch ($attribute) {
             case self::USER_EDIT:
             case self::USER_SHOW:
+                if (!$subject instanceof User) {
+                    return false;
+                }
                 return in_array("ROLE_ADMIN", array($user->getRoles())) || $user === $subject;
             case self::USER_DELETE:
+                if (!$subject instanceof User) {
+                    return false;
+                }
                 return in_array("ROLE_ADMIN", $user->getRoles());
         }
 

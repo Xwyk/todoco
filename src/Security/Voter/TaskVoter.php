@@ -53,7 +53,7 @@ class TaskVoter extends Voter
                 if (!$subject instanceof Task) {
                     return false;
                 }
-                return in_array("ROLE_ADMIN", array($user->getRoles())) || $subject->getAuthor() === $user;
+                return in_array("ROLE_ADMIN", $user->getRoles()) || $subject->getAuthor() === $user;
         }
 
         return false;

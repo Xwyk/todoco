@@ -3,6 +3,7 @@
 
 namespace App\Tests;
 
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -12,10 +13,8 @@ use App\Entity\User;
 
 abstract class TodoWebTestCase extends WebTestCase implements TodoWebTestCaseInterface
 {
-    const defaultUserLogin = "user1";
-    const defaultUserPassword = "user1";
-    const defaultAdminLogin = "admin2";
-    const defaultAdminPassword = "admin1";
+    const DEFAULT_USER_LOGIN  = "user1";
+    const DEFAULT_ADMIN_LOGIN = "admin2";
 
     public function entryPoint($type,
                                $url,
@@ -76,24 +75,21 @@ abstract class TodoWebTestCase extends WebTestCase implements TodoWebTestCaseInt
         }
     }
     protected function createUserClient(){
-        return $this->createAuthenticatedClient(self::defaultUserLogin);
+        return $this->createAuthenticatedClient(self::DEFAULT_USER_LOGIN);
     }
 
     protected function createAdminClient(){
-        return $this->createAuthenticatedClient(self::defaultAdminLogin);
+        return $this->createAuthenticatedClient(self::DEFAULT_ADMIN_LOGIN);
     }
 
     protected function createAuthenticatedClient($username){
         $client = static::createClient();
-        $container = static::$kernel->getContainer();
-        $session = $container->get('session');
-        $person = self::$kernel->getContainer()->get('doctrine')->getRepository('App:User')->findOneByUsername($username);
-
-        $token = new UsernamePasswordToken($person, null, 'main', $person->getRoles());
-        $session->set('_security_main', serialize($token));
-        $session->save();
-
-        $client->getCookieJar()->set(new Cookie($session->getName(), $session->getId()));
+        $user = (static::getContainer()->get(UserRepository::class)->createQueryBuilder('u')
+            ->where("u.username = :username")
+            ->setParameter('username', $username)
+            ->getQuery()
+            ->getResult())[0];
+        $client->loginUser($user);
         return $client;
     }
 }

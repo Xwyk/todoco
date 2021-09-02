@@ -126,13 +126,13 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = ($this->roles->toArray());
         foreach ($roles as $role){
             $roles = $role->__tostring();
         }
-        return $roles;
+        return array($roles);
     }
 
     public function getSalt()

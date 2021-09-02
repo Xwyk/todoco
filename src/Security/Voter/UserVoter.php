@@ -43,7 +43,7 @@ class UserVoter extends Voter
                 if (!$subject instanceof User) {
                     return false;
                 }
-                return in_array("ROLE_ADMIN", array($user->getRoles())) || $user === $subject;
+                return in_array("ROLE_ADMIN", $user->getRoles()) || $user === $subject;
             case self::USER_DELETE:
                 if (!$subject instanceof User) {
                     return false;

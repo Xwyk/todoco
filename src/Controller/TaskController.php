@@ -16,19 +16,25 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class TaskController extends AbstractController
 {
-    // @TODO add view task route
     /**
      * @Route("/tasks", name="task_list")
      * @isGranted("TASKS_VIEW")
-     * @param TaskRepository $repository
      * @return Response
      */
-    public function list(TaskRepository $repository): Response
+    public function list(Security $security, TaskRepository $repository): Response
     {
-        return $this->render('task/list.html.twig', ['tasks' => $repository->findAll()]);
+        return $this->render('task/list.html.twig', [
+            'tasks' => array_merge(
+                $this->getUser()->getTasks()->getValues(),
+                ($security->isGranted('ROLE_ADMIN'))?
+                    $repository->findAnonymous()
+                    :[]
+            )
+        ]);
     }
 
     /**
@@ -46,6 +52,7 @@ class TaskController extends AbstractController
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->getUser()->addTask($task);
             $manager->persist($task);
             $manager->flush();
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');

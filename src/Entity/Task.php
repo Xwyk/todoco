@@ -34,12 +34,13 @@ class Task
     private $content;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default" : false})
      */
     private $isDone;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tasks")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $author;
 
@@ -68,6 +69,16 @@ class Task
     public function setDate()
     {
         $this->createdAt = new \DateTimeImmutable();
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setState()
+    {
+        if (!isset($this->isDone)){
+            $this->isDone = false;
+        }
     }
 
     public function getTitle(): ?string

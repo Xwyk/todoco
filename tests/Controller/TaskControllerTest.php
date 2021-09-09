@@ -180,7 +180,7 @@ class TaskControllerTest extends TodoWebTestCase
                     "additionalCheck" => "checkShowDetailsTokenOkIdOk"
                 ]
             ],
-            "testGetTaskNotLogged" => [
+/*            "testGetTaskNotLogged" => [
                 [
                     "type" => "GET",
                     "url" => "/tasks/".self::DEFAULT_REAL_TASK_ID,
@@ -263,7 +263,7 @@ class TaskControllerTest extends TodoWebTestCase
                     "needReturnOnOK" => false,
                     "additionalCheck" => "checkShowDetailsTokenOkIdOk"
                 ]
-            ],
+            ],*/
             "testEditTaskNotLogged" => [
                 [
                     "type" => "GET",

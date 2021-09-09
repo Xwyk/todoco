@@ -5,6 +5,7 @@ namespace App\Security\Voter;
 use App\Entity\Task;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use function PHPUnit\Framework\returnArgument;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service_locator;
@@ -16,7 +17,13 @@ class TaskVoter extends Voter
     const TASK_TOGGLE = "TASK_TOGGLE";
     const TASK_DELETE = "TASK_DELETE";
     const TASK_CREATE = "TASK_CREATE";
+    private Security $security;
 
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
 
     protected function supports(string $attribute, $subject): bool
     {
@@ -53,7 +60,8 @@ class TaskVoter extends Voter
                 if (!$subject instanceof Task) {
                     return false;
                 }
-                return in_array("ROLE_ADMIN", $user->getRoles()) || $subject->getAuthor() === $user;
+                return $this->security->isGranted('ROLE_ADMIN') || $subject->getAuthor() === $user;
+               // return in_array("ROLE_ADMIN", $user->getRoles()) || $subject->getAuthor() === $user;
         }
 
         return false;

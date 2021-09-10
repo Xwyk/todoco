@@ -29,11 +29,13 @@ class UserController extends AbstractController
     public function createAction(Request $request, UserPasswordHasherInterface $hasher)
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, ['withRoleChoice']);
 
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+            // TODO refactor UserManager
             $em = $this->getDoctrine()->getManager();
             $user->setPassword(
                 $hasher->hashPassword(

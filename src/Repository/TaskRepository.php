@@ -19,25 +19,14 @@ class TaskRepository extends ServiceEntityRepository
         parent::__construct($registry, Task::class);
     }
 
-    // /**
-    //  * @return Task[] Returns an array of Task objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
     public function findAnonymous(): ?array
     {
+//        $qb = $this->createQueryBuilder('t');
+
+//        if($isAdmin){
+//            $qb->orWhere('t.author')
+//        }
+
         return $this->createQueryBuilder('t')
             ->andWhere('t.author IS NULL')
             ->getQuery()

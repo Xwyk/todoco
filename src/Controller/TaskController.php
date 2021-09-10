@@ -27,6 +27,7 @@ class TaskController extends AbstractController
      */
     public function list(Security $security, TaskRepository $repository): Response
     {
+        // TODO faire un truc beau dans le repo
         return $this->render('task/list.html.twig', [
             'tasks' => array_merge(
                 $this->getUser()->getTasks()->getValues(),

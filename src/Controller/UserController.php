@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Manager\UserManager;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,32 +28,20 @@ class UserController extends AbstractController
     /**
      * @Route("/users/create", name="user_create")
      */
-    public function createAction(Request $request, UserPasswordHasherInterface $hasher)
+    public function createAction(Request $request, UserManager $userManager)
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user, ['withRoleChoice']);
+        $form = $this->createForm(UserType::class, $user, ['withRoleChoice'=>true]);
 
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
-            // TODO refactor UserManager
-            $em = $this->getDoctrine()->getManager();
-            $user->setPassword(
-                $hasher->hashPassword(
-                    $user,
-                    $user->getPassword()
-                )
-            );
-
-            $em->persist($user);
-            $em->flush();
-
+            $userManager->setPassword($user, $user->getPassword());
+            $userManager->persist($user);
+            $userManager->flush();
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
-
             return $this->redirectToRoute('user_list');
         }
-
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
     }
 
@@ -59,20 +49,19 @@ class UserController extends AbstractController
      * @Route("/users/{id}/edit", name="user_edit")
      * @isGranted("USER_EDIT", subject="user")
      */
-    public function editAction(User $user, Request $request, UserPasswordHasherInterface $hasher)
+    public function editAction(User $user, Request $request, UserManager $userManager)
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, ['withRoleChoice'=>true]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $hasher->hashPassword($user, $user->getPassword());
-            $user->setPassword($password);
-            $this->getDoctrine()->getManager()->flush();
+            $userManager->setPassword($user, $user->getPassword());
+            $userManager->persist($user);
+            $userManager->flush();
             $this->addFlash('success', "L'utilisateur a bien été modifié");
             return $this->redirectToRoute('user_list');
         }
-
         return $this->render('user/edit.html.twig', ['form' => $form->createView(), 'user' => $user]);
     }
 }

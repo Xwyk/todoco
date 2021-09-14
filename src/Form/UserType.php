@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Repository\RoleRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -26,6 +28,17 @@ class UserType extends AbstractType
             ])
             ->add('email', EmailType::class, ['label' => 'Adresse email'])
         ;
+        if($options["withRoleChoice"]){
+            $builder->add('roles', null, [
+                'query_builder'=>function (RoleRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.name', 'ASC');
+                },
+                'expanded'  => true,
+                'multiple' => true,
+                'label' => 'Roles'
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)

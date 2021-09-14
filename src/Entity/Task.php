@@ -117,6 +117,11 @@ class Task
         return $this;
     }
 
+    public function toggleState()
+    {
+        $this->isDone = !$this->isDone;
+    }
+
     public function getAuthor(): ?User
     {
         return $this->author;

@@ -77,6 +77,7 @@ class TaskController extends AbstractController
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($task);
             $manager->flush();
             $this->addFlash('success', 'La tâche a bien été modifiée.');
             return $this->redirectToRoute('task_list');
@@ -93,7 +94,8 @@ class TaskController extends AbstractController
      */
     public function toggle(Task $task, EntityManagerInterface $manager): RedirectResponse
     {
-        $task->setIsDone(!$task->getIsDone());
+        $task->toggleState();
+        $manager->persist($task);
         $manager->flush();
 
         $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));

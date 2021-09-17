@@ -29,12 +29,7 @@ class TaskController extends AbstractController
     {
         // TODO faire un truc beau dans le repo
         return $this->render('task/list.html.twig', [
-            'tasks' => array_merge(
-                $this->getUser()->getTasks()->getValues(),
-                ($security->isGranted('ROLE_ADMIN'))?
-                    $repository->findAnonymous()
-                    :[]
-            )
+            'tasks' => $repository->findByUser($this->getUser(), $security->isGranted('ROLE_ADMIN'))
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Task;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,18 +20,26 @@ class TaskRepository extends ServiceEntityRepository
         parent::__construct($registry, Task::class);
     }
 
-    public function findAnonymous(): ?array
-    {
-//        $qb = $this->createQueryBuilder('t');
 
-//        if($isAdmin){
-//            $qb->orWhere('t.author')
-//        }
+    /**
+     * Return tasks for given user, and anonymous tasks if isAdmin is set to true
+     * @param User $user
+     * @param bool $isAdmin
+     * @return array|null
+     */
+    public function findByUser(User $user, bool $isAdmin = false): ?array{
+        // Get tasks where author is user's id
+        $queryBuilder = $this->createQueryBuilder('t')
+            ->andWhere('t.author = :author')
+            ->setParameter('val', $user->getId());
 
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.author IS NULL')
-            ->getQuery()
-            ->getResult()
-        ;
+        // If user is admin, add anonymous tasks to request
+        if ($isAdmin){
+            $queryBuilder->andWhere('t.author IS NULL');
+        }
+
+        // Execute request and return result in array
+        return $queryBuilder->getQuery()
+            ->getResult();
     }
 }

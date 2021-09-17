@@ -32,9 +32,11 @@ class UserType extends AbstractType
         ;
 
         if($options["withRoleChoice"]){
-            $builder->add('roles', EntityType::class, [
-                'class'=>Role::class,
-                'multiple' => true
+            $builder->add('role', ChoiceType::class, [
+                'choices' => [
+                    'Utilisateur simple' => 'ROLE_USER',
+                    'Administrateur' => 'ROLE_ADMIN'
+                ]
             ]);
         }
     }

@@ -1,14 +1,18 @@
 <?php
 
 namespace App\Tests\Controller;
-use App\Tests\TodoWebTestCase;
+use App\Tests\XwykWebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class TaskControllerTest extends TodoWebTestCase
+class TaskControllerTest extends XwykWebTestCase
 {
     const DEFAULT_REAL_TASK_ID = 1;
     const DEFAULT_BAD_TASK_ID = 2;
     const DEFAULT_FAKE_TASK_ID = 100;
+
+    const ADMIN_LOGIN = "admin1";
+    const USER_LOGIN = "user1";
+
     public function loadEntryPoints()
     {
         return [

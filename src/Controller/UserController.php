@@ -7,6 +7,7 @@ use App\Form\UserType;
 use App\Manager\UserManager;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +29,7 @@ class UserController extends AbstractController
     /**
      * @Route("/users/create", name="user_create")
      */
-    public function createAction(Request $request, UserManager $userManager)
+    public function createAction(Request $request, UserManager $userManager, EntityManagerInterface $entityManager)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user, ['withRoleChoice'=>true]);
@@ -37,8 +38,8 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $userManager->setPassword($user, $user->getPassword());
-            $userManager->persist($user);
-            $userManager->flush();
+            $entityManager->persist($user);
+            $entityManager->flush();
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
             return $this->redirectToRoute('user_list');
         }

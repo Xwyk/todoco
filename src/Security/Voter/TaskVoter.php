@@ -61,7 +61,6 @@ class TaskVoter extends Voter
                     return false;
                 }
                 return $this->security->isGranted('ROLE_ADMIN') || $subject->getAuthor() === $user;
-               // return in_array("ROLE_ADMIN", $user->getRoles()) || $subject->getAuthor() === $user;
         }
 
         return false;

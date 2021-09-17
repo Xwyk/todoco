@@ -3,7 +3,7 @@
 
 namespace App\Tests;
 
-interface TodoWebTestCaseInterface
+interface XwykWebTestCaseInterface
 {
     public function loadEntryPoints();
     public function testEntryPoints($test);

@@ -11,10 +11,18 @@ use Symfony\Component\BrowserKit\Cookie;
 use App\Entity\User;
 
 
-abstract class TodoWebTestCase extends WebTestCase implements TodoWebTestCaseInterface
+abstract class XwykWebTestCase extends WebTestCase implements XwykWebTestCaseInterface
 {
-    const DEFAULT_USER_LOGIN  = "user1";
-    const DEFAULT_ADMIN_LOGIN = "admin2";
+
+    protected string $userLogin;
+    protected string $adminLogin;
+
+    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    {
+        $this->userLogin = static::USER_LOGIN;
+        $this->adminLogin = static::ADMIN_LOGIN;
+        parent::__construct($name, $data, $dataName);
+    }
 
     public function entryPoint($type,
                                $url,
@@ -75,11 +83,11 @@ abstract class TodoWebTestCase extends WebTestCase implements TodoWebTestCaseInt
         }
     }
     protected function createUserClient(){
-        return $this->createAuthenticatedClient(self::DEFAULT_USER_LOGIN);
+        return $this->createAuthenticatedClient($this->userLogin);
     }
 
     protected function createAdminClient(){
-        return $this->createAuthenticatedClient(self::DEFAULT_ADMIN_LOGIN);
+        return $this->createAuthenticatedClient($this->adminLogin);
     }
 
     protected function createAuthenticatedClient($username){

@@ -44,10 +44,10 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     private $tasks;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Role::class, inversedBy="users")
-     * @var Role[]|Collection
+     * @ORM\Column(type="string", length=255)
+     * @var string
      */
-    private $roles;
+    private $role;
 
     public function __construct()
     {
@@ -126,13 +126,9 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return $this;
     }
 
-    public function getRoles(): iterable
+    public function getRoles(): array
     {
-        $roles = array();
-        foreach (($this->roles->toArray()) as $role){
-            $roles[] = $role->__tostring();
-        }
-        return $this->roles;
+        return [$this->role];
     }
 
     public function getSalt()
@@ -150,19 +146,19 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         // TODO: Implement @method string getUserIdentifier()
     }
 
-    public function addRole(Role $role): self
+    /**
+     * @return string
+     */
+    public function getRole(): string
     {
-        if (!$this->roles->contains($role)) {
-            $this->roles[] = $role;
-        }
-
-        return $this;
+        return $this->role;
     }
 
-    public function removeRole(Role $role): self
+    /**
+     * @param string $role
+     */
+    public function setRole(string $role): void
     {
-        $this->roles->removeElement($role);
-
-        return $this;
+        $this->role = $role;
     }
 }

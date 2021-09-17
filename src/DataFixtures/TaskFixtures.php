@@ -24,12 +24,12 @@ class TaskFixtures extends Fixture implements OrderedFixtureInterface
     }
 
     protected function createTask(string $title, string $content, User $author): Task{
-        $user = new Task();
-        $user->setTitle($title)
+        $task = new Task();
+        $task->setTitle($title)
             ->setContent($content)
             ->setAuthor($author)
             ->setIsDone(false);
-        return $user;
+        return $task;
     }
 
     public function getDependencies(): array

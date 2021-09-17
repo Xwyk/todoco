@@ -4,9 +4,12 @@
 namespace App\Tests\Entity;
 
 
+use App\Entity\Task;
 use App\Entity\User;
+use App\Tests\MethodTestCase;
 use App\Tests\XwykGetSetTestCase;
 use PHPUnit\Framework\TestCase;
+use function PHPUnit\Framework\assertContains;
 use function PHPUnit\Framework\assertEquals;
 
 class UserTest extends XwykGetSetTestCase
@@ -41,7 +44,13 @@ class UserTest extends XwykGetSetTestCase
                     "variable" => "role",
                     "value" => "ROLE_ADMIN"
                 ]
-            ]
+            ],
         ];
+    }
+    public function testTaskVariable(){
+        $task = new Task();
+        $user = new User();
+        $user->addTask($task);
+        assertContains($task, $user->getTasks());
     }
 }

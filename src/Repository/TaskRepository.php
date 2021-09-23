@@ -31,13 +31,12 @@ class TaskRepository extends ServiceEntityRepository
         // Get tasks where author is user's id
         $queryBuilder = $this->createQueryBuilder('t')
             ->andWhere('t.author = :author')
-            ->setParameter('val', $user->getId());
+            ->setParameter('author', $user->getId());
 
         // If user is admin, add anonymous tasks to request
         if ($isAdmin){
-            $queryBuilder->andWhere('t.author IS NULL');
+            $queryBuilder->orWhere('t.author IS NULL');
         }
-
         // Execute request and return result in array
         return $queryBuilder->getQuery()
             ->getResult();

@@ -61,15 +61,4 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
-
-    /**
-     * Override to control what happens when the user hits a secure page
-     * but isn't logged in yet.
-     */
-    public function start(Request $request, AuthenticationException $authException = null): Response
-    {
-        $url = $this->getLoginUrl($request);
-
-        return new RedirectResponse($url);
-    }
 }

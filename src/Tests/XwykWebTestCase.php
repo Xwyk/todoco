@@ -31,8 +31,7 @@ abstract class XwykWebTestCase extends WebTestCase implements XwykWebTestCaseInt
                                $parameters = [],
                                $files = [],
                                $server = [],
-                               $content = "",
-                               $needReturnOnOK = false)
+                               $content = "")
     {
         self::ensureKernelShutdown();
         switch ($authenticated){
@@ -46,7 +45,7 @@ abstract class XwykWebTestCase extends WebTestCase implements XwykWebTestCaseInt
                 $client = self::createClient();
                 break;
         }
-        $client->request(
+        $crawler = $client->request(
             $type,
             $url,
             $parameters,
@@ -56,9 +55,7 @@ abstract class XwykWebTestCase extends WebTestCase implements XwykWebTestCaseInt
         );
         $statusCode = $client->getResponse()->getStatusCode();
         $this->assertEquals($expectedCode, $statusCode);
-        return (($needReturnOnOK) && ($client->getResponse()->getStatusCode() == $expectedCode)) ?
-            ($client->getResponse()->getContent()) :
-            null;
+        return $crawler;
     }
 
     /**
@@ -75,11 +72,11 @@ abstract class XwykWebTestCase extends WebTestCase implements XwykWebTestCaseInt
             $test['files'],
             $test['server'],
             $test['content'],
-            $test['needReturnOnOK']
         );
-        if ($test['needReturnOnOK'] && isset($test['additionalCheck'])) {
-            $method = $test['additionalCheck'];
-            $this->$method($result);
+        if (isset($test['additionalCheck']) && is_array($test['additionalCheck'])) {
+            foreach ($test['additionalCheck'] as $method){
+                $this->$method($result);
+            }
         }
     }
     protected function createUserClient(){

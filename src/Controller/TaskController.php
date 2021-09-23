@@ -22,12 +22,11 @@ class TaskController extends AbstractController
 {
     /**
      * @Route("/tasks", name="task_list")
-     * @isGranted("TASKS_VIEW")
+     * @isGranted("TASKS_LIST")
      * @return Response
      */
     public function list(Security $security, TaskRepository $repository): Response
     {
-        // TODO faire un truc beau dans le repo
         return $this->render('task/list.html.twig', [
             'tasks' => $repository->findByUser($this->getUser(), $security->isGranted('ROLE_ADMIN'))
         ]);

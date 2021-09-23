@@ -6,20 +6,18 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Manager\UserManager;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class UserController extends AbstractController
 {
     /**
      * @Route("/users", name="user_list")
-     * @isGranted("ROLE_ADMIN")
+     * @IsGranted()anted("ROLE_ADMIN")
      */
     public function listAction(UserRepository $userRepository): Response
     {

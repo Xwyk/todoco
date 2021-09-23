@@ -15,7 +15,6 @@ interface XwykWebTestCaseInterface
         $parameters = [],
         $files = [],
         $server = [],
-        $content = "",
-        $needReturnOnOK = false
+        $content = ""
     );
 }

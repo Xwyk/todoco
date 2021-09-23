@@ -14,16 +14,6 @@ use App\Entity\User;
 abstract class XwykWebTestCase extends WebTestCase implements XwykWebTestCaseInterface
 {
 
-    protected string $userLogin;
-    protected string $adminLogin;
-
-    public function __construct(?string $name = null, array $data = [], $dataName = '')
-    {
-        $this->userLogin = static::USER_LOGIN;
-        $this->adminLogin = static::ADMIN_LOGIN;
-        parent::__construct($name, $data, $dataName);
-    }
-
     public function entryPoint($type,
                                $url,
                                $expectedCode,
@@ -80,11 +70,11 @@ abstract class XwykWebTestCase extends WebTestCase implements XwykWebTestCaseInt
         }
     }
     protected function createUserClient(){
-        return $this->createAuthenticatedClient($this->userLogin);
+        return $this->createAuthenticatedClient(static::USER_LOGIN);
     }
 
     protected function createAdminClient(){
-        return $this->createAuthenticatedClient($this->adminLogin);
+        return $this->createAuthenticatedClient(static::ADMIN_LOGIN);
     }
 
     protected function createAuthenticatedClient($username){

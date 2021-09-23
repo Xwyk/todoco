@@ -27,7 +27,6 @@ class TaskController extends AbstractController
      */
     public function list(Security $security, TaskRepository $repository): Response
     {
-        // TODO faire un truc beau dans le repo
         return $this->render('task/list.html.twig', [
             'tasks' => $repository->findByUser($this->getUser(), $security->isGranted('ROLE_ADMIN'))
         ]);

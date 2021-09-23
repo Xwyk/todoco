@@ -9,12 +9,18 @@ use function PHPUnit\Framework\assertEquals;
 
 class TaskControllerTest extends XwykWebTestCase
 {
-    const DEFAULT_REAL_TASK_ID = 1;
-    const DEFAULT_BAD_TASK_ID = 2;
-    const DEFAULT_FAKE_TASK_ID = 100;
-
     const ADMIN_LOGIN = "admin1";
+    const ADMIN_TASK_ID = 3;
+    const ADMIN_BAD_TASK_ID = 2;
+    const ADMIN_TASKS = 1;
+
     const USER_LOGIN = "user1";
+    const USER_TASK_ID = 1;
+    const USER_BAD_TASK_ID = 2;
+    const USER_TASKS = 1;
+
+    const DEFAULT_FAKE_TASK_ID = 100000;
+    const ANONYMOUS_TASKS = 1;
 
     public function loadEntryPoints()
     {
@@ -60,7 +66,9 @@ class TaskControllerTest extends XwykWebTestCase
                     "authenticated" => "ADMIN",
                     "content" => "",
                     "expectedCode" => Response::HTTP_OK,
-                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                    "additionalCheck" => [
+                        "checkAdminTasksShowTasksAsAdmin"
+                    ]
                 ]
             ],
             "testAddTasksNotLogged" => [
@@ -105,7 +113,7 @@ class TaskControllerTest extends XwykWebTestCase
             "testEditTaskNotLogged" => [
                 [
                     "type" => "GET",
-                    "url" => "/tasks/".self::DEFAULT_REAL_TASK_ID."/edit",
+                    "url" => "/tasks/".self::USER_TASK_ID."/edit",
                     "parameters" => [],
                     "files" => [],
                     "server" => [],
@@ -118,7 +126,7 @@ class TaskControllerTest extends XwykWebTestCase
             "testEditTaskAsUserIdExistBelongUser" => [
                 [
                     "type" => "GET",
-                    "url" => "/tasks/".self::DEFAULT_REAL_TASK_ID."/edit",
+                    "url" => "/tasks/".self::USER_TASK_ID."/edit",
                     "parameters" => [],
                     "files" => [],
                     "server" => [],
@@ -131,7 +139,7 @@ class TaskControllerTest extends XwykWebTestCase
             "testEditTaskAsUserIdExistNotBelongUser" => [
                 [
                     "type" => "GET",
-                    "url" => "/tasks/".self::DEFAULT_BAD_TASK_ID."/edit",
+                    "url" => "/tasks/".self::USER_BAD_TASK_ID."/edit",
                     "parameters" => [],
                     "files" => [],
                     "server" => [],
@@ -157,7 +165,7 @@ class TaskControllerTest extends XwykWebTestCase
             "testEditTaskAsAdminIdExist" => [
                 [
                     "type" => "GET",
-                    "url" => "/tasks/".self::DEFAULT_REAL_TASK_ID."/edit",
+                    "url" => "/tasks/".self::USER_TASK_ID."/edit",
                     "parameters" => [],
                     "files" => [],
                     "server" => [],
@@ -195,18 +203,30 @@ class TaskControllerTest extends XwykWebTestCase
 
     public function checkUserTasksShowTasksAsUser(Crawler $crawler)
     {
-        dump($crawler->count(".task"));
-        $crawler
-            ->filter('.task')
-            ->reduce(function ($node, $i) {
-                dump($node);
-            })
-            ->first()
-        ;
+        assertEquals(self::USER_TASKS, $crawler->count(".task"));
+//        $crawler
+//            ->filter('.task')
+//            ->reduce(function ($node, $i) {
+//                dump($node);
+//            })
+//            ->first()
+//        ;
     }
 
     public function checkAnonymousTasksShowTasksAsUser(Crawler $crawler)
     {
 
+    }
+
+    public function checkAdminTasksShowTasksAsAdmin(Crawler $crawler)
+    {
+        assertEquals(self::ADMIN_TASKS + self::ANONYMOUS_TASKS, $crawler->count(".task"));
+//        $crawler
+//            ->filter('.task')
+//            ->reduce(function ($node, $i) {
+//                dump($node);
+//            })
+//            ->first()
+//        ;
     }
 }

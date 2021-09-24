@@ -8,6 +8,11 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
+/**
+ * Class UserFixtures
+ * @package App\DataFixtures
+ * @codeCoverageIgnore
+ */
 class UserFixtures extends Fixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)

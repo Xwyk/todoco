@@ -3,7 +3,11 @@
 
 namespace App\Tests;
 
-
+/**
+ * Interface MethodTestCaseInterface
+ * @package App\Tests
+ * @codeCoverageIgnore
+ */
 interface MethodTestCaseInterface
 {
     /**

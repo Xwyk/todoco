@@ -7,6 +7,11 @@ namespace App\Tests;
 use PHPUnit\Framework\TestCase;
 use function PHPUnit\Framework\assertEquals;
 
+/**
+ * Class XwykGetSetTestCase
+ * @package App\Tests
+ * @codeCoverageIgnore
+ */
 abstract class XwykGetSetTestCase extends TestCase implements XwykGetSetTestCaseInterface
 {
 

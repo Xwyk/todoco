@@ -3,7 +3,11 @@
 
 namespace App\Tests;
 
-
+/**
+ * Interface XwykGetSetTestCaseInterface
+ * @package App\Tests
+ * @codeCoverageIgnore
+ */
 interface XwykGetSetTestCaseInterface
 {
     /**

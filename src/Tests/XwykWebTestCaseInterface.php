@@ -2,7 +2,11 @@
 
 
 namespace App\Tests;
-
+/**
+ * Interface XwykWebTestCaseInterface
+ * @package App\Tests
+ * @codeCoverageIgnore
+ */
 interface XwykWebTestCaseInterface
 {
     public function loadEntryPoints();

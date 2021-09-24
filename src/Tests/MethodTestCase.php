@@ -7,6 +7,11 @@ namespace App\Tests;
 use PHPUnit\Framework\TestCase;
 use function PHPUnit\Framework\assertEquals;
 
+/**
+ * Class MethodTestCase
+ * @package App\Tests
+ * @codeCoverageIgnore
+ */
 abstract class MethodTestCase extends TestCase implements MethodTestCaseInterface
 {
 

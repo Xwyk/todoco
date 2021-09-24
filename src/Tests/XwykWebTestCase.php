@@ -10,7 +10,11 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\BrowserKit\Cookie;
 use App\Entity\User;
 
-
+/**
+ * Class XwykWebTestCase
+ * @package App\Tests
+ * @codeCoverageIgnore
+ */
 abstract class XwykWebTestCase extends WebTestCase implements XwykWebTestCaseInterface
 {
 

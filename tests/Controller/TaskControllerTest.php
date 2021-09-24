@@ -6,23 +6,24 @@ use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Response;
 use function PHPUnit\Framework\assertContains;
 use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertTrue;
 
 class TaskControllerTest extends XwykWebTestCase
 {
     const ADMIN_LOGIN = "admin1";
     const ADMIN_TASK_ID = 3;
     const ADMIN_BAD_TASK_ID = 2;
-    const ADMIN_TASKS = 1;
+    const ADMIN_TASKS = 100;
 
     const USER_LOGIN = "user1";
     const USER_TASK_ID = 1;
-    const USER_BAD_TASK_ID = 2;
-    const USER_TASKS = 1;
+    const USER_BAD_TASK_ID = 200;
+    const USER_TASKS = 100;
 
     const DEFAULT_FAKE_TASK_ID = 100000;
-    const ANONYMOUS_TASKS = 1;
+    const ANONYMOUS_TASKS = 100;
 
-    public function loadEntryPoints()
+    public function loadEntryPoints(): array
     {
         return [
             "testShowTasksNotLogged" => [
@@ -87,7 +88,7 @@ class TaskControllerTest extends XwykWebTestCase
             "testAddTasksAsUser" => [
                 [
                     "type" => "POST",
-                    "url" => "/tasks",
+                    "url" => "/tasks/create",
                     "parameters" => [],
                     "files" => [],
                     "server" => [],
@@ -100,7 +101,7 @@ class TaskControllerTest extends XwykWebTestCase
             "testAddTasksAsAdmin" => [
                 [
                     "type" => "POST",
-                    "url" => "/tasks",
+                    "url" => "/tasks/create",
                     "parameters" => [],
                     "files" => [],
                     "server" => [],
@@ -145,8 +146,7 @@ class TaskControllerTest extends XwykWebTestCase
                     "server" => [],
                     "authenticated" => "USER",
                     "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN,
-                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
+                    "expectedCode" => Response::HTTP_FORBIDDEN
                 ]
             ],
             "testEditTaskAsUserIdNotExist" => [
@@ -203,7 +203,8 @@ class TaskControllerTest extends XwykWebTestCase
 
     public function checkUserTasksShowTasksAsUser(Crawler $crawler)
     {
-        assertEquals(self::USER_TASKS, $crawler->count(".task"));
+        // Check tasks number
+        assertEquals(self::USER_TASKS, $crawler->filter('.task')->count());
 //        $crawler
 //            ->filter('.task')
 //            ->reduce(function ($node, $i) {
@@ -220,7 +221,7 @@ class TaskControllerTest extends XwykWebTestCase
 
     public function checkAdminTasksShowTasksAsAdmin(Crawler $crawler)
     {
-        assertEquals(self::ADMIN_TASKS + self::ANONYMOUS_TASKS, $crawler->count(".task"));
+        assertEquals(self::ADMIN_TASKS + self::ANONYMOUS_TASKS, $crawler->filter('.task')->count());
 //        $crawler
 //            ->filter('.task')
 //            ->reduce(function ($node, $i) {

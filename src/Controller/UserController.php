@@ -6,20 +6,18 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Manager\UserManager;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class UserController extends AbstractController
 {
     /**
      * @Route("/users", name="user_list")
-     * @isGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function listAction(UserRepository $userRepository): Response
     {
@@ -48,9 +46,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/users/{id}/edit", name="user_edit")
-     * @isGranted("USER_EDIT", subject="user")
+     * @IsGranted("USER_EDIT", subject="user")
      */
-    public function editAction(User $user, Request $request, UserManager $userManager)
+    public function editAction(User $user, Request $request, UserManager $userManager, EntityManagerInterface $entityManager)
     {
         $form = $this->createForm(UserType::class, $user, ['withRoleChoice'=>true]);
 
@@ -58,8 +56,8 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $userManager->setPassword($user, $user->getPassword());
-            $userManager->persist($user);
-            $userManager->flush();
+            $entityManager->persist($user);
+            $entityManager->flush();
             $this->addFlash('success', "L'utilisateur a bien été modifié");
             return $this->redirectToRoute('user_list');
         }

@@ -22,7 +22,7 @@ class TaskController extends AbstractController
 {
     /**
      * @Route("/tasks", name="task_list")
-     * @isGranted("TASKS_VIEW")
+     * @IsGranted("TASKS_LIST")
      * @return Response
      */
     public function list(Security $security, TaskRepository $repository): Response
@@ -34,7 +34,7 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/create", name="task_create", methods={"GET","POST"})
-     * @isGranted("ROLE_USER")
+     * @IsGranted("ROLE_USER")
      * @param Request $request
      * @param EntityManager $manager
      * @return RedirectResponse|Response
@@ -58,7 +58,7 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/edit", name="task_edit", methods={"GET","POST"})
-     * @isGranted("TASK_EDIT", subject="task")
+     * @IsGranted("TASK_EDIT", subject="task")
      * @param Task $task
      * @param Request $request
      * @param EntityManager $manager
@@ -81,7 +81,7 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
-     * @isGranted("TASK_TOGGLE", subject="task")
+     * @IsGranted("TASK_TOGGLE", subject="task")
      * @param Task $task
      * @param EntityManagerInterface $manager
      * @return RedirectResponse
@@ -99,7 +99,7 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
-     * @isGranted("TASK_DELETE", subject="task")
+     * @IsGranted("TASK_DELETE", subject="task")
      * @param Task $task
      * @param EntityManager $manager
      * @return RedirectResponse

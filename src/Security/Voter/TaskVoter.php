@@ -12,7 +12,7 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\service_l
 
 class TaskVoter extends Voter
 {
-    const TASKS_LIST  = "TASKS_VIEW";
+    const TASKS_LIST  = "TASKS_LIST";
     const TASK_EDIT   = "TASK_EDIT";
     const TASK_TOGGLE = "TASK_TOGGLE";
     const TASK_DELETE = "TASK_DELETE";

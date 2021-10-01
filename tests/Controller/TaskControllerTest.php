@@ -187,6 +187,30 @@ class TaskControllerTest extends XwykWebTestCase
                     "expectedCode" => Response::HTTP_NOT_FOUND,
                     "additionalCheck" => "checkShowDetailsTokenOkIdOk"
                 ]
+            ],
+            "testToggleTaskAsUserIdOK" => [
+                [
+                    "type" => "POST",
+                    "url" => "/tasks/".self::USER_TASK_ID."/toggle",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => "USER",
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_OK
+                ]
+            ],
+            "testDeleteTaskAsUserIdOK" => [
+                [
+                    "type" => "POST",
+                    "url" => "/tasks/".self::USER_TASK_ID."/delete",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => "USER",
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_NO_CONTENT
+                ]
             ]
         ];
     }

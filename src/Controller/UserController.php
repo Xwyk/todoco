@@ -16,18 +16,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/users", name="user_list")
+     * @Route("/users", name="user_list", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function listAction(UserRepository $userRepository): Response
+    public function list(UserRepository $userRepository): Response
     {
         return $this->render('user/list.html.twig', ['users' => $userRepository->findAll()]);
     }
 
     /**
-     * @Route("/users/create", name="user_create")
+     * @Route("/users/create", name="user_create", methods={"GET","POST"})
      */
-    public function createAction(Request $request, UserManager $userManager, EntityManagerInterface $entityManager)
+    public function create(Request $request, UserManager $userManager, EntityManagerInterface $entityManager)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user, ['withRoleChoice'=>true]);
@@ -45,10 +45,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/users/{id}/edit", name="user_edit")
+     * @Route("/users/{id}/edit", name="user_edit", methods={"GET","POST"})
      * @IsGranted("USER_EDIT", subject="user")
      */
-    public function editAction(User $user, Request $request, UserManager $userManager, EntityManagerInterface $entityManager)
+    public function edit(User $user, Request $request, UserManager $userManager, EntityManagerInterface $entityManager)
     {
         $form = $this->createForm(UserType::class, $user, ['withRoleChoice'=>true]);
 

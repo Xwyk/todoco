@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\Security;
 class TaskController extends AbstractController
 {
     /**
-     * @Route("/tasks", name="task_list")
+     * @Route("/tasks", name="task_list", method={"GET"})
      * @IsGranted("TASKS_LIST")
      * @return Response
      */
@@ -80,13 +80,13 @@ class TaskController extends AbstractController
     }
 
     /**
-     * @Route("/tasks/{id}/toggle", name="task_toggle")
+     * @Route("/tasks/{id}/toggle", name="task_toggle", methods={"PUT"})
      * @IsGranted("TASK_TOGGLE", subject="task")
      * @param Task $task
      * @param EntityManagerInterface $manager
      * @return RedirectResponse
      */
-    public function toggle(Task $task, EntityManagerInterface $manager): RedirectResponse
+    public function toggle(Task $task, EntityManagerInterface $manager): Response
     {
         $task->toggleState();
         $manager->persist($task);
@@ -94,11 +94,11 @@ class TaskController extends AbstractController
 
         $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
 
-        return $this->redirectToRoute('task_list');
+        return new Response("OK", Response::HTTP_OK);
     }
 
     /**
-     * @Route("/tasks/{id}/delete", name="task_delete")
+     * @Route("/tasks/{id}/delete", name="task_delete", methods={"DELETE"})
      * @IsGranted("TASK_DELETE", subject="task")
      * @param Task $task
      * @param EntityManager $manager
@@ -106,13 +106,13 @@ class TaskController extends AbstractController
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function delete(Task $task, EntityManagerInterface $manager): RedirectResponse
+    public function delete(Task $task, EntityManagerInterface $manager): Response
     {
         $manager->remove($task);
         $manager->flush();
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 
-        return $this->redirectToRoute('task_list');
+        return new Response("OK", Response::HTTP_NO_CONTENT);
     }
 }

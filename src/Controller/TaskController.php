@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\Security;
 class TaskController extends AbstractController
 {
     /**
-     * @Route("/tasks", name="task_list", method={"GET"})
+     * @Route("/tasks", name="task_list", methods={"GET"})
      * @IsGranted("TASKS_LIST")
      * @return Response
      */

@@ -60,7 +60,7 @@ class TaskVoter extends Voter
                 if (!$subject instanceof Task) {
                     return false;
                 }
-                return $this->security->isGranted('ROLE_ADMIN') || $subject->getAuthor() === $user;
+                return ($this->security->isGranted('ROLE_ADMIN') && $subject->getAuthor() == null) || $subject->getAuthor() === $user;
         }
 
         return false;

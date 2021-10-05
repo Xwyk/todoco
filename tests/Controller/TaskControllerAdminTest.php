@@ -8,7 +8,7 @@ use function PHPUnit\Framework\assertContains;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertTrue;
 
-class TaskControllerTest extends XwykWebTestCase
+class TaskControllerAdminTest extends XwykWebTestCase
 {
     const ADMIN_LOGIN = "admin1";
     const ADMIN_TASK_ID = 250;
@@ -27,138 +27,6 @@ class TaskControllerTest extends XwykWebTestCase
     public function loadEntryPoints(): array
     {
         return [
-            "testShowTasksNotLogged" => [
-                [
-                    "type" => "GET",
-                    "url" => "/tasks",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND,
-                    "additionalCheck" => [
-                        "checkRedirectionShowTasksNotLogged"
-                    ]
-                ]
-            ],
-            "testShowTasksAsUser" => [
-                [
-                    "type" => "GET",
-                    "url" => "/tasks",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK,
-                    "additionalCheck" => [
-                        "checkUserTasksShowTasksAsUser",
-                        "checkAnonymousTasksShowTasksAsUser"
-                    ]
-                ]
-            ],
-            "testAddTasksNotLogged" => [
-                [
-                    "type" => "GET",
-                    "url" => "/tasks/create",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND,
-                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
-                ]
-            ],
-            "testAddTasksAsUser" => [
-                [
-                    "type" => "POST",
-                    "url" => "/tasks/create",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK,
-                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
-                ]
-            ],
-            "testEditTaskNotLogged" => [
-                [
-                    "type" => "GET",
-                    "url" => "/tasks/".self::USER_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND,
-                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
-                ]
-            ],
-            "testEditTaskAsUserIdExistBelongUser" => [
-                [
-                    "type" => "GET",
-                    "url" => "/tasks/".self::USER_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK,
-                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
-                ]
-            ],
-            "testEditTaskAsUserIdExistNotBelongUser" => [
-                [
-                    "type" => "GET",
-                    "url" => "/tasks/".self::USER_BAD_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN
-                ]
-            ],
-            "testEditTaskAsUserIdNotExist" => [
-                [
-                    "type" => "GET",
-                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NOT_FOUND,
-                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
-                ]
-            ],
-            "testToggleTaskAsUserIdOK" => [
-                [
-                    "type" => "PUT",
-                    "url" => "/tasks/".self::USER_TASK_ID."/toggle",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK
-                ]
-            ],
-            "testDeleteTaskAsUserIdOK" => [
-                [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::USER_TASK_ID."/delete",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NO_CONTENT
-                ]
-            ],
             // ADMIN PART
             "testTaskListGetAdm" => [
                 [
@@ -171,7 +39,7 @@ class TaskControllerTest extends XwykWebTestCase
                     "content" => "",
                     "expectedCode" => Response::HTTP_OK,
                     "additionalCheck" => [
-                        "checkAdminTasksShowTasksAsAdmin"
+                        "checkTaskNumber"
                     ]
                 ]
             ],
@@ -196,7 +64,7 @@ class TaskControllerTest extends XwykWebTestCase
                     "server" => [],
                     "authenticated" => "ADMIN",
                     "content" => "",
-                    "expectedCode" => Response::HTTP_CREATED
+                    "expectedCode" => Response::HTTP_OK
                 ]
             ],
             "testTaskCreatePostAdmDataKO" => [
@@ -412,7 +280,7 @@ class TaskControllerTest extends XwykWebTestCase
                     "server" => [],
                     "authenticated" => "ADMIN",
                     "content" => "",
-                    "expectedCode" => Response::HTTP_OK
+                    "expectedCode" => Response::HTTP_NO_CONTENT
                 ]
             ],
             "testTaskDeleteDeleteAdmIdNotValid" => [
@@ -477,20 +345,13 @@ class TaskControllerTest extends XwykWebTestCase
 //        ;
     }
 
-    public function checkAnonymousTasksShowTasksAsUser(Crawler $crawler)
+    public function checkAnonymousTasksShow(Crawler $crawler)
     {
 
     }
 
-    public function checkAdminTasksShowTasksAsAdmin(Crawler $crawler)
+    public function checkTaskNumber(Crawler $crawler)
     {
         assertEquals(self::ADMIN_TASKS + self::ANONYMOUS_TASKS, $crawler->filter('.task')->count());
-//        $crawler
-//            ->filter('.task')
-//            ->reduce(function ($node, $i) {
-//                dump($node);
-//            })
-//            ->first()
-//        ;
     }
 }

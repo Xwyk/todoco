@@ -1,4 +1,6 @@
 {
+    "name": "xwyk/todoco",
+    "description": "Todo&Co application",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",

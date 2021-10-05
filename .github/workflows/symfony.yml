@@ -21,11 +21,6 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
       # https://hub.docker.com/_/elasticsearch/
-      elasticsearch:
-        image: elasticsearch:6.8.10
-        ports:
-          - 9209:9200
-        options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
     strategy:
       fail-fast: true
       matrix:
@@ -74,13 +69,8 @@ jobs:
         run: composer install
 
       # —— Symfony 🎵 ——————————————————————————————————————————————————————————
-      - name: Check Symfony requirements
-        run: vendor/bin/requirements-checker
-
       - name: Check the Symfony console
-        run: |
-          bin/console about
-          bin/console strangebuzz:version
+        run: bin/console about
 
       ## —— Coding standards ✨ ————————————————————————————————————————————————
       # Can't handle PHP8 for now

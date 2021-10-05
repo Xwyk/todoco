@@ -131,16 +131,28 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return [$this->role];
     }
 
+    /**
+     * @return string|void|null
+     * @codeCoverageIgnore
+     */
     public function getSalt()
     {
         // TODO: Implement getSalt() method.
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
     }
 
+    /**
+     * @param $name
+     * @param $arguments
+     * @codeCoverageIgnore
+     */
     public function __call($name, $arguments)
     {
         // TODO: Implement @method string getUserIdentifier()

@@ -11,6 +11,7 @@ use App\Tests\XwykGetSetTestCase;
 use PHPUnit\Framework\TestCase;
 use function PHPUnit\Framework\assertContains;
 use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertNotContains;
 
 class UserTest extends XwykGetSetTestCase
 {
@@ -52,5 +53,7 @@ class UserTest extends XwykGetSetTestCase
         $user = new User();
         $user->addTask($task);
         assertContains($task, $user->getTasks());
+        $user->removeTask($task);
+        assertNotContains($task, $user->getTasks());
     }
 }

@@ -8,6 +8,12 @@
     "behat/transliterator": {
         "version": "v1.3.0"
     },
+    "blackfire/php-sdk": {
+        "version": "v1.27.0"
+    },
+    "composer/ca-bundle": {
+        "version": "1.2.11"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.2"
     },

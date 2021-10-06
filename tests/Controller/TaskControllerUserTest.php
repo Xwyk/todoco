@@ -2,20 +2,10 @@
 
 namespace App\Tests\Controller;
 
-use App\Tests\XwykWebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class TaskControllerUserTest extends XwykWebTestCase
+class TaskControllerUserTest extends TaskControllerTest
 {
-
-    const USER_LOGIN = "user1";
-    const USER_TASK_ID = 1;
-    const USER_BAD_TASK_ID = 200;
-    const USER_TASKS = 100;
-
-    const DEFAULT_FAKE_TASK_ID = 100000;
-    const ANONYMOUS_TASKS = 100;
-    const ANONYMOUS_TASK_ID = 452;
 
     public function loadEntryPoints(): array
     {

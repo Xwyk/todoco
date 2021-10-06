@@ -1,28 +1,12 @@
 <?php
 
 namespace App\Tests\Controller;
-use App\Tests\XwykWebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Response;
-use function PHPUnit\Framework\assertContains;
 use function PHPUnit\Framework\assertEquals;
-use function PHPUnit\Framework\assertTrue;
 
-class TaskControllerAdminTest extends XwykWebTestCase
+class TaskControllerAdminTest extends TaskControllerTest
 {
-    const ADMIN_LOGIN = "admin1";
-    const ADMIN_TASK_ID = 250;
-    const ADMIN_BAD_TASK_ID = 2;
-    const ADMIN_TASKS = 100;
-
-    const USER_LOGIN = "user1";
-    const USER_TASK_ID = 1;
-    const USER_BAD_TASK_ID = 200;
-    const USER_TASKS = 100;
-
-    const DEFAULT_FAKE_TASK_ID = 100000;
-    const ANONYMOUS_TASKS = 100;
-    const ANONYMOUS_TASK_ID = 450;
 
     public function loadEntryPoints(): array
     {

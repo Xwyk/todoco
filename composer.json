@@ -113,6 +113,12 @@
             "symfony console d:d:c --env=test",
             "symfony console d:m:m -n --env=test",
             "symfony console d:f:l -n --env=test"
+        ],
+        "workflowInit": [
+            "bin/console d:d:d --env=test --if-exists -f",
+            "bin/console d:d:c --env=test",
+            "bin/console d:m:m -n --env=test",
+            "bin/console d:f:l -n --env=test"
         ]
     },
     "conflict": {

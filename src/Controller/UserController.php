@@ -30,7 +30,7 @@ class UserController extends AbstractController
     public function create(Request $request, UserManager $userManager, EntityManagerInterface $entityManager)
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user, ['withRoleChoice'=>true]);
+        $form = $this->createForm(UserType::class, $user, ['withRoleChoice' => true]);
 
         $form->handleRequest($request);
 
@@ -39,8 +39,10 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
+
             return $this->redirectToRoute('user_list');
         }
+
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
     }
 
@@ -50,7 +52,7 @@ class UserController extends AbstractController
      */
     public function edit(User $user, Request $request, UserManager $userManager, EntityManagerInterface $entityManager)
     {
-        $form = $this->createForm(UserType::class, $user, ['withRoleChoice'=>true]);
+        $form = $this->createForm(UserType::class, $user, ['withRoleChoice' => true]);
 
         $form->handleRequest($request);
 
@@ -59,8 +61,10 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success', "L'utilisateur a bien été modifié");
+
             return $this->redirectToRoute('user_list');
         }
+
         return $this->render('user/edit.html.twig', ['form' => $form->createView(), 'user' => $user]);
     }
 }

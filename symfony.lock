@@ -28,6 +28,11 @@
         "files": [
             "./config/packages/test/dama_doctrine_test_bundle.yaml"
         ]
+    "composer/semver": {
+        "version": "3.2.5"
+    },
+    "composer/xdebug-handler": {
+        "version": "2.0.2"
     },
     "doctrine/annotations": {
         "version": "1.0",
@@ -127,6 +132,18 @@
     "egulias/email-validator": {
         "version": "3.1.1"
     },
+    "friendsofphp/php-cs-fixer": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "be2103eb4a20942e28a6dd87736669b757132435"
+        },
+        "files": [
+            "./.php-cs-fixer.dist.php"
+        ]
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
@@ -151,6 +168,9 @@
     "phar-io/version": {
         "version": "3.1.0"
     },
+    "php-cs-fixer/diff": {
+        "version": "v2.0.2"
+    },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
     },
@@ -162,6 +182,9 @@
     },
     "phpspec/prophecy": {
         "version": "1.13.0"
+    },
+    "phpstan/phpstan": {
+        "version": "0.12.99"
     },
     "phpunit/php-code-coverage": {
         "version": "9.2.6"

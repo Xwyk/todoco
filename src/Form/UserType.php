@@ -21,7 +21,7 @@ class UserType extends AbstractType
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les deux mots de passe doivent correspondre.',
-                'required' => true,
+                'required' => $options['passwordRequired'],
                 'first_options' => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Tapez le mot de passe à nouveau'],
             ])
@@ -44,5 +44,6 @@ class UserType extends AbstractType
             'data_class' => User::class,
         ]);
         $resolver->setDefault('withRoleChoice', false)->setAllowedTypes('withRoleChoice', ['boolean']);
+        $resolver->setDefault('passwordRequired', true)->setAllowedTypes('passwordRequired', ['boolean']);
     }
 }

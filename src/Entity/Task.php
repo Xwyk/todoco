@@ -56,8 +56,9 @@ class Task
 
     public function setCreatedAt(\DateTimeImmutable $createdAt = null): self
     {
-        if ($createdAt == null)
+        if (null == $createdAt) {
             $createdAt = new \DateTimeImmutable();
+        }
         $this->createdAt = $createdAt;
 
         return $this;
@@ -76,7 +77,7 @@ class Task
      */
     public function setState()
     {
-        if (!isset($this->isDone)){
+        if (!isset($this->isDone)) {
             $this->isDone = false;
         }
     }

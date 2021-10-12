@@ -1,16 +1,18 @@
 <?php
 
-
 namespace App\Tests;
+
 /**
- * Interface XwykWebTestCaseInterface
- * @package App\Tests
+ * Interface XwykWebTestCaseInterface.
+ *
  * @codeCoverageIgnore
  */
 interface XwykWebTestCaseInterface
 {
     public function loadEntryPoints();
+
     public function testEntryPoints($test);
+
     public function entryPoint(
         $type,
         $url,
@@ -19,6 +21,6 @@ interface XwykWebTestCaseInterface
         $parameters = [],
         $files = [],
         $server = [],
-        $content = ""
+        $content = ''
     );
 }

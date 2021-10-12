@@ -32,22 +32,4 @@ abstract class TaskControllerTest extends XwykWebTestCase
     const ANONYMOUS_TASKS = 100;
     // task id that is anonymous (author id is null)
     const ANONYMOUS_TASK_ID = 450;
-
-    /**
-     * Reset database before each test set
-     */
-    public static function setUpBeforeClass(): void
-    {
-        // launch 'composer resetForTest' command
-        $process = new Process(["composer", "resetForTest"]);
-        $process->run();
-
-        // if execution isn't successful, throw exception
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-
-        // call parent function
-        parent::setUpBeforeClass();
-    }
 }

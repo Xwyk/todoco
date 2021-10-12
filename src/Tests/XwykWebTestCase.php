@@ -1,38 +1,33 @@
 <?php
 
-
 namespace App\Tests;
 
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\BrowserKit\Cookie;
-use App\Entity\User;
 
 /**
- * Class XwykWebTestCase
- * @package App\Tests
+ * Class XwykWebTestCase.
+ *
  * @codeCoverageIgnore
  */
 abstract class XwykWebTestCase extends WebTestCase implements XwykWebTestCaseInterface
 {
-
-    public function entryPoint($type,
-                               $url,
-                               $expectedCode,
-                               $authenticated = null,
-                               $parameters = [],
-                               $files = [],
-                               $server = [],
-                               $content = "")
-    {
+    public function entryPoint(
+        $type,
+        $url,
+        $expectedCode,
+        $authenticated = null,
+        $parameters = [],
+        $files = [],
+        $server = [],
+        $content = ''
+    ) {
         self::ensureKernelShutdown();
-        switch ($authenticated){
-            case "ADMIN":
+        switch ($authenticated) {
+            case 'ADMIN':
                 $client = $this->createAdminClient();
                 break;
-            case "USER":
+            case 'USER':
                 $client = $this->createUserClient();
                 break;
             default:
@@ -49,6 +44,7 @@ abstract class XwykWebTestCase extends WebTestCase implements XwykWebTestCaseInt
         );
         $statusCode = $client->getResponse()->getStatusCode();
         $this->assertEquals($expectedCode, $statusCode);
+
         return $crawler;
     }
 
@@ -68,27 +64,32 @@ abstract class XwykWebTestCase extends WebTestCase implements XwykWebTestCaseInt
             $test['content'],
         );
         if (isset($test['additionalCheck']) && is_array($test['additionalCheck'])) {
-            foreach ($test['additionalCheck'] as $method){
+            foreach ($test['additionalCheck'] as $method) {
                 $this->$method($result);
             }
         }
     }
-    protected function createUserClient(){
-        return $this->createAuthenticatedClient(static::USER_LOGIN);
+
+    protected function createUserClient()
+    {
+        return $this->createAuthenticatedClient(static::USER_LOGIN); /* @phpstan-ignore-line */
     }
 
-    protected function createAdminClient(){
-        return $this->createAuthenticatedClient(static::ADMIN_LOGIN);
+    protected function createAdminClient()
+    {
+        return $this->createAuthenticatedClient(static::ADMIN_LOGIN); /* @phpstan-ignore-line */
     }
 
-    protected function createAuthenticatedClient($username){
+    protected function createAuthenticatedClient($username)
+    {
         $client = static::createClient();
         $user = (static::getContainer()->get(UserRepository::class)->createQueryBuilder('u')
-            ->where("u.username = :username")
+            ->where('u.username = :username')
             ->setParameter('username', $username)
             ->getQuery()
             ->getResult())[0];
         $client->loginUser($user);
+
         return $client;
     }
 }

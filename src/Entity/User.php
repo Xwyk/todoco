@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ *
  * @method string getUserIdentifier()
  */
 class User implements PasswordAuthenticatedUserInterface, UserInterface
@@ -45,6 +46,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @var string
      */
     private $role;
@@ -52,7 +54,6 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
-        $this->roles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -158,17 +159,11 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         // TODO: Implement @method string getUserIdentifier()
     }
 
-    /**
-     * @return string
-     */
     public function getRole(): string
     {
         return $this->role;
     }
 
-    /**
-     * @param string $role
-     */
     public function setRole(string $role): void
     {
         $this->role = $role;

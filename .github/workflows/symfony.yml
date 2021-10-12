@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - V5
-env:
-  ES_HTTP_PORT: 9209
+
 jobs:
   symfony:
     name: Symfony 5.2 (PHP ${{ matrix.php-versions }})
@@ -14,13 +13,12 @@ jobs:
     services:
       # https://docs.docker.com/samples/library/mysql/
       mysql:
-        image: mysql:5.7
+        image: mysql:8
         env:
           MYSQL_ROOT_PASSWORD: root
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-      # https://hub.docker.com/_/elasticsearch/
     strategy:
       fail-fast: true
       matrix:
@@ -68,12 +66,18 @@ jobs:
       - name: Install Composer dependencies
         run: composer install
 
+      # —— CS-Fixer 🎵 ——————————————————————————————————————————————————————————
+      - name: Fix syntax errors
+        run: vendor/bin/php-cs-fixer fix src
+
+      # —— PHPStan 🎵 ——————————————————————————————————————————————————————————
+      - name: Find bugs in code
+        run: vendor/bin/phpstan analyse src
+
       # —— Symfony 🎵 ——————————————————————————————————————————————————————————
       - name: Check the Symfony console
         run: bin/console about
 
       ## —— Tests ✅ ———————————————————————————————————————————————————————————
       - name: Run functionnal and unit tests
-        run: |
-          composer workflowInit
-          vendor/bin/phpunit --testdox --configuration phpunit.xml.dist
+        run: vendor/bin/phpunit --testdox --configuration phpunit.xml.dist

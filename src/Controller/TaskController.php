@@ -9,7 +9,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use phpDocumentor\Reflection\Types\Iterable_;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,21 +22,22 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks", name="task_list", methods={"GET"})
      * @IsGranted("TASKS_LIST")
-     * @return Response
      */
     public function list(Security $security, TaskRepository $repository): Response
     {
         return $this->render('task/list.html.twig', [
-            'tasks' => $repository->findByUser($this->getUser(), $security->isGranted('ROLE_ADMIN'))
+            'tasks' => $repository->findByUser($this->getUser(), $security->isGranted('ROLE_ADMIN')),
         ]);
     }
 
     /**
      * @Route("/tasks/create", name="task_create", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
-     * @param Request $request
+     *
      * @param EntityManager $manager
+     *
      * @return RedirectResponse|Response
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -51,18 +51,21 @@ class TaskController extends AbstractController
             $manager->persist($task);
             $manager->flush();
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
+
             return $this->redirectToRoute('task_list');
         }
+
         return $this->render('task/create.html.twig', ['form' => $form->createView()]);
     }
 
     /**
      * @Route("/tasks/{id}/edit", name="task_edit", methods={"GET","POST"})
      * @IsGranted("TASK_EDIT", subject="task")
-     * @param Task $task
-     * @param Request $request
+     *
      * @param EntityManager $manager
+     *
      * @return RedirectResponse|Response
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -74,16 +77,17 @@ class TaskController extends AbstractController
             $manager->persist($task);
             $manager->flush();
             $this->addFlash('success', 'La tâche a bien été modifiée.');
+
             return $this->redirectToRoute('task_list');
         }
-        return $this->render('task/edit.html.twig', ['form' => $form->createView(), 'task' => $task,]);
+
+        return $this->render('task/edit.html.twig', ['form' => $form->createView(), 'task' => $task]);
     }
 
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle", methods={"PUT"})
      * @IsGranted("TASK_TOGGLE", subject="task")
-     * @param Task $task
-     * @param EntityManagerInterface $manager
+     *
      * @return RedirectResponse
      */
     public function toggle(Task $task, EntityManagerInterface $manager): Response
@@ -94,15 +98,17 @@ class TaskController extends AbstractController
 
         $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
 
-        return new Response("OK", Response::HTTP_OK);
+        return new Response('OK', Response::HTTP_OK);
     }
 
     /**
      * @Route("/tasks/{id}/delete", name="task_delete", methods={"DELETE"})
      * @IsGranted("TASK_DELETE", subject="task")
-     * @param Task $task
+     *
      * @param EntityManager $manager
+     *
      * @return RedirectResponse
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -113,6 +119,6 @@ class TaskController extends AbstractController
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 
-        return new Response("OK", Response::HTTP_NO_CONTENT);
+        return new Response('OK', Response::HTTP_NO_CONTENT);
     }
 }

@@ -23,11 +23,13 @@ class TaskController extends AbstractController
      * @Route("/tasks", name="task_list", methods={"GET"})
      * @IsGranted("TASKS_LIST")
      */
-    public function list(Security $security, TaskRepository $repository): Response
+    public function list(Security $security, TaskRepository $repository, Request $request): Response
     {
+        $finished = (bool) $request->query->get('finished');
+
         return $this->render('task/list.html.twig', [
-            'tasks' => $repository->findByUser($this->getUser(), $security->isGranted('ROLE_ADMIN')),
-        ]);
+                'tasks' => $repository->findByUserState($this->getUser(), $security->isGranted('ROLE_ADMIN'), $finished),
+            ]);
     }
 
     /**
@@ -96,7 +98,7 @@ class TaskController extends AbstractController
         $manager->persist($task);
         $manager->flush();
 
-        $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
+//        $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
 
         return new Response('OK', Response::HTTP_OK);
     }
@@ -117,7 +119,7 @@ class TaskController extends AbstractController
         $manager->remove($task);
         $manager->flush();
 
-        $this->addFlash('success', 'La tâche a bien été supprimée.');
+//        $this->addFlash('success', 'La tâche a bien été supprimée.');
 
         return new Response('OK', Response::HTTP_NO_CONTENT);
     }

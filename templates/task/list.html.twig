@@ -6,7 +6,7 @@
     <a href="{{ path('task_create') }}" class="btn btn-info pull-right">Créer une tâche</a>
     <div class="row">
         {% for task in tasks %}
-        <div class="col-sm-4 col-lg-4 col-md-4">
+        <div id="task_{{ task.id }}" class="col-sm-4 col-lg-4 col-md-4">
             <div class="thumbnail task">
                 <div class="caption">
                     <h4 class="pull-right">
@@ -16,14 +16,10 @@
                     <p>{{ task.content }}</p>
                 </div>
                 <div>
-                    <form action="{{ path('task_toggle', {'id' : task.id }) }}">
-                        <button class="btn btn-success btn-sm pull-right">
+                        <button class="btn btn-success btn-sm pull-right toggle" onclick="toggleTask('{{ path('task_toggle', {'id' : task.id }) }}', {{ task.id }})">
                             {% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée{% endif %}
                         </button>
-                    </form>
-                    <form action="{{ path('task_delete', {'id' : task.id }) }}">
-                        <button class="btn btn-danger btn-sm pull-right">Supprimer</button>
-                    </form>
+                        <button class="btn btn-danger btn-sm pull-right delete" onclick="deleteTask('{{ path('task_delete', {'id' : task.id }) }}', {{ task.id }})">Supprimer</button>
                 </div>
             </div>
         </div>
@@ -33,4 +29,29 @@
             </div>
         {% endfor %}
     </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        function toggleTask(url, id){
+            $.ajax({
+                url: url,
+                type: 'PUT',
+                success: function (data) {
+                    $('#task_' + id).hide();
+                }
+            });
+        }
+
+        function deleteTask(url, id){
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                success: function (data) {
+                    $('#task_' + id).hide();
+                }
+            });
+        }
+
+    </script>
+
 {% endblock %}

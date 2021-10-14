@@ -23,17 +23,23 @@ class TaskRepository extends ServiceEntityRepository
     /**
      * Return tasks for given user, and anonymous tasks if isAdmin is set to true.
      */
-    public function findByUser(User $user, bool $isAdmin = false): ?array
+    public function findByUserState(User $user, bool $isAdmin = false, bool $finished = false): ?array
     {
         // Get tasks where author is user's id
         $queryBuilder = $this->createQueryBuilder('t')
-            ->andWhere('t.author = :author')
+            ->where('t.author = :author')
             ->setParameter('author', $user->getId());
 
         // If user is admin, add anonymous tasks to request
         if ($isAdmin) {
             $queryBuilder->orWhere('t.author IS NULL');
         }
+
+        // Add state to request
+        $queryBuilder
+            ->andWhere('t.isDone = :state')
+            ->setParameter('state', $finished);
+
         // Execute request and return result in array
         return $queryBuilder->getQuery()
             ->getResult();

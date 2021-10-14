@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
@@ -35,7 +36,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userManager->setPassword($user, $user->getPassword());
+            $userManager->setPassword($user, $form->get('password')->getData());
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
@@ -50,14 +51,16 @@ class UserController extends AbstractController
      * @Route("/users/{id}/edit", name="user_edit", methods={"GET","POST"})
      * @IsGranted("USER_EDIT", subject="user")
      */
-    public function edit(User $user, Request $request, UserManager $userManager, EntityManagerInterface $entityManager)
+    public function edit(User $user, Request $request, UserManager $userManager, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher)
     {
-        $form = $this->createForm(UserType::class, $user, ['withRoleChoice' => true]);
+        $form = $this->createForm(UserType::class, $user, ['withRoleChoice' => true, 'passwordRequired' => false]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userManager->setPassword($user, $user->getPassword());
+            if (null !== $form->get('password')->getData()) {
+                $userManager->setPassword($user, $form->get('password')->getData());
+            }
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success', "L'utilisateur a bien été modifié");

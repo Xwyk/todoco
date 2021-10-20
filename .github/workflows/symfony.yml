@@ -78,6 +78,10 @@ jobs:
       - name: Check the Symfony console
         run: bin/console about
 
+      # —— Project init 🎵 ——————————————————————————————————————————————————————————
+      - name: Create database for test
+        run: composer workflowInit
+
       ## —— Tests ✅ ———————————————————————————————————————————————————————————
       - name: Run functionnal and unit tests
         run: vendor/bin/phpunit --testdox --configuration phpunit.xml.dist

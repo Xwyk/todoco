@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TaskController extends AbstractController
 {
@@ -43,7 +44,7 @@ class TaskController extends AbstractController
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function create(Request $request, EntityManagerInterface $manager)
+    public function create(Request $request, EntityManagerInterface $manager, ValidatorInterface $validator)
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);

@@ -2,17 +2,16 @@
 
 namespace App\Security\Voter;
 
+use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-Use App\Entity\User;
-
 class UserVoter extends Voter
 {
-    const USER_EDIT   = "USER_EDIT";
-    const USER_SHOW   = "USER_SHOW";
-    const USER_DELETE = "USER_DELETE";
+    public const USER_EDIT = 'USER_EDIT';
+    public const USER_SHOW = 'USER_SHOW';
+    public const USER_DELETE = 'USER_DELETE';
 
     protected function supports(string $attribute, $subject): bool
     {
@@ -23,9 +22,10 @@ class UserVoter extends Voter
             [
                 self::USER_EDIT,
                 self::USER_SHOW,
-                self::USER_DELETE
-            ])
-            && ($subject instanceof User || $subject == null);
+                self::USER_DELETE,
+            ]
+        )
+            && ($subject instanceof User || null == $subject);
     }
 
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
@@ -43,12 +43,14 @@ class UserVoter extends Voter
                 if (!$subject instanceof User) {
                     return false;
                 }
-                return in_array("ROLE_ADMIN", $user->getRoles()) || $user === $subject;
+
+                return in_array('ROLE_ADMIN', $user->getRoles()) || $user === $subject;
             case self::USER_DELETE:
                 if (!$subject instanceof User) {
                     return false;
                 }
-                return in_array("ROLE_ADMIN", $user->getRoles());
+
+                return in_array('ROLE_ADMIN', $user->getRoles());
         }
 
         return false;

@@ -2,10 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Role;
 use App\Entity\User;
-use App\Repository\RoleRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -24,19 +21,20 @@ class UserType extends AbstractType
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les deux mots de passe doivent correspondre.',
-                'required' => true,
-                'first_options'  => ['label' => 'Mot de passe'],
+                'required' => $options['passwordRequired'],
+                'first_options' => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Tapez le mot de passe à nouveau'],
+                'mapped'=>false,
             ])
             ->add('email', EmailType::class, ['label' => 'Adresse email'])
         ;
 
-        if($options["withRoleChoice"]){
+        if ($options['withRoleChoice']) {
             $builder->add('role', ChoiceType::class, [
                 'choices' => [
                     'Utilisateur simple' => 'ROLE_USER',
-                    'Administrateur' => 'ROLE_ADMIN'
-                ]
+                    'Administrateur' => 'ROLE_ADMIN',
+                ],
             ]);
         }
     }
@@ -46,6 +44,7 @@ class UserType extends AbstractType
         $resolver->setDefaults([
             'data_class' => User::class,
         ]);
-        $resolver->setDefault("withRoleChoice", false)->setAllowedTypes('withRoleChoice',['boolean']);
+        $resolver->setDefault('withRoleChoice', false)->setAllowedTypes('withRoleChoice', ['boolean']);
+        $resolver->setDefault('passwordRequired', true)->setAllowedTypes('passwordRequired', ['boolean']);
     }
 }

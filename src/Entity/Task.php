@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TaskRepository::class)
@@ -25,11 +26,15 @@ class Task
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $content;
 
@@ -56,8 +61,9 @@ class Task
 
     public function setCreatedAt(\DateTimeImmutable $createdAt = null): self
     {
-        if ($createdAt == null)
+        if (null == $createdAt) {
             $createdAt = new \DateTimeImmutable();
+        }
         $this->createdAt = $createdAt;
 
         return $this;
@@ -76,7 +82,7 @@ class Task
      */
     public function setState()
     {
-        if (!isset($this->isDone)){
+        if (!isset($this->isDone)) {
             $this->isDone = false;
         }
     }

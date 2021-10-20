@@ -2,302 +2,307 @@
 
 namespace App\Tests\Controller;
 
+use function PHPUnit\Framework\assertEquals;
 use Symfony\Component\HttpFoundation\Response;
 
 class TaskControllerUserTest extends TaskControllerTest
 {
-
     public function loadEntryPoints(): array
     {
         return [
-            "testTaskListGetUsr" => [
+            'testTaskListGetUsr' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_OK,
+                ],
             ],
-            "testTaskCreateGetUsr" => [
+            'testTaskCreateGetUsr' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks/create",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks/create',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_OK,
+                    'additionalCheck' => [
+                        'createPostDataOk',
+                        'createPostDataKo',
+                    ],
+                ],
             ],
-            "testTaskCreatePostUsrDataOK" => [
+            'testTaskEditGetUsrIdOk' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/create",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks/'.self::USER_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_OK,
+                    'additionalCheck' => [
+                        'editPostDataOk',
+                        'editPostDataKo',
+                    ],
+                ],
             ],
-            "testTaskCreatePostUsrDataKO" => [
+            'testTaskEditGetUsrIdNotValid' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/create",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_UNPROCESSABLE_ENTITY
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks/'.self::DEFAULT_FAKE_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NOT_FOUND,
+
+                ],
             ],
-            "testTaskEditGetUsrIdOk" => [
+            'testTaskEditGetUsrIdNotBelong' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks/".self::USER_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks/'.self::USER_BAD_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FORBIDDEN,
+                ],
             ],
-            "testTaskEditGetUsrIdNotValid" => [
+            'testTaskEditGetUsrAnonymousTask' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NOT_FOUND
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FORBIDDEN,
+                ],
             ],
-            "testTaskEditGetUsrIdNotBelong" => [
+            'testTaskEditGetUsrIdNotValidDataOk' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks/".self::USER_BAD_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/'.self::DEFAULT_FAKE_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NOT_FOUND,
+                ],
             ],
-            "testTaskEditGetUsrAnonymousTask" => [
+            'testTaskEditGetUsrIdNotValidDataKo' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/'.self::DEFAULT_FAKE_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NOT_FOUND,
+                ],
             ],
-            "testTaskEditPostUsrIdOkDataOk" => [
+            'testTaskEditGetUsrIdNotBelongDataOk' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::USER_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/'.self::USER_BAD_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FORBIDDEN,
+                ],
             ],
-            "testTaskEditPostUsrIdOkDataKo" => [
+            'testTaskEditGetUsrIdNotBelongDataKo' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::USER_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_UNPROCESSABLE_ENTITY
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/'.self::USER_BAD_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FORBIDDEN,
+                ],
             ],
-            "testTaskEditGetUsrIdNotValidDataOk" => [
+            'testTaskEditGetUsrAnonymousTaskDataOk' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NOT_FOUND
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FORBIDDEN,
+                ],
             ],
-            "testTaskEditGetUsrIdNotValidDataKo" => [
+            'testTaskEditGetUsrAnonymousTaskDataKo' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NOT_FOUND
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FORBIDDEN,
+                ],
             ],
-            "testTaskEditGetUsrIdNotBelongDataOk" => [
+            'testTaskTogglePutUsrIdOk' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::USER_BAD_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN
-                ]
+                    'type' => 'PUT',
+                    'url' => '/tasks/'.self::USER_TASK_ID.'/toggle',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_OK,
+                ],
             ],
-            "testTaskEditGetUsrIdNotBelongDataKo" => [
+            'testTaskTogglePutUsrIdNotValid' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::USER_BAD_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN
-                ]
+                    'type' => 'PUT',
+                    'url' => '/tasks/'.self::DEFAULT_FAKE_TASK_ID.'/toggle',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NOT_FOUND,
+                ],
             ],
-            "testTaskEditGetUsrAnonymousTaskDataOk" => [
+            'testTaskTogglePutUsrIdNotBelong' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN
-                ]
+                    'type' => 'PUT',
+                    'url' => '/tasks/'.self::USER_BAD_TASK_ID.'/toggle',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FORBIDDEN,
+                ],
             ],
-            "testTaskEditGetUsrAnonymousTaskDataKo" => [
+            'testTaskTogglePutUsrAnonymousTask' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN
-                ]
+                    'type' => 'PUT',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/toggle',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FORBIDDEN,
+                ],
             ],
-            "testTaskTogglePutUsrIdOk" => [
+            'testTaskDeleteDeleteUsrIdOk' => [
                 [
-                    "type" => "PUT",
-                    "url" => "/tasks/".self::USER_TASK_ID."/toggle",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK
-                ]
+                    'type' => 'DELETE',
+                    'url' => '/tasks/'.self::USER_TASK_ID.'/delete',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NO_CONTENT,
+                ],
             ],
-            "testTaskTogglePutUsrIdNotValid" => [
+            'testTaskDeleteDeleteUsrIdNotValid' => [
                 [
-                    "type" => "PUT",
-                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID."/toggle",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NOT_FOUND
-                ]
+                    'type' => 'DELETE',
+                    'url' => '/tasks/'.self::DEFAULT_FAKE_TASK_ID.'/delete',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NOT_FOUND,
+                ],
             ],
-            "testTaskTogglePutUsrIdNotBelong" => [
+            'testTaskDeleteDeleteUsrIdNotBelong' => [
                 [
-                    "type" => "PUT",
-                    "url" => "/tasks/".self::USER_BAD_TASK_ID."/toggle",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN
-                ]
+                    'type' => 'DELETE',
+                    'url' => '/tasks/'.self::USER_BAD_TASK_ID.'/delete',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FORBIDDEN,
+                ],
             ],
-            "testTaskTogglePutUsrAnonymousTask" => [
+            'testTaskDeleteDeleteUsrAnonymousTask' => [
                 [
-                    "type" => "PUT",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/toggle",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN
-                ]
+                    'type' => 'DELETE',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/delete',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'USER',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FORBIDDEN,
+                ],
             ],
-            "testTaskDeleteDeleteUsrIdOk" => [
-                [
-                    "type" => "DELETE",
-                    "url" => "/tasks/".self::USER_TASK_ID."/delete",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NO_CONTENT
-                ]
-            ],
-            "testTaskDeleteDeleteUsrIdNotValid" => [
-                [
-                    "type" => "DELETE",
-                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID."/delete",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NOT_FOUND
-                ]
-            ],
-            "testTaskDeleteDeleteUsrIdNotBelong" => [
-                [
-                    "type" => "DELETE",
-                    "url" => "/tasks/".self::USER_BAD_TASK_ID."/delete",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN
-                ]
-            ],
-            "testTaskDeleteDeleteUsrAnonymousTask" => [
-                [
-                    "type" => "DELETE",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/delete",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "USER",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN
-                ]
-            ]
         ];
+    }
+
+    public function createPostDataOk(array $params)
+    {
+        $client = clone $params['client'];
+
+        $client->submitForm('task_create_submit', [
+            'task[title]' => '...',
+            'task[content]' => '...',
+        ]);
+        assertEquals(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
+    }
+
+    public function createPostDataKo(array $params)
+    {
+        $crawler = clone $params['crawler'];
+        $client = clone $params['client'];
+        $client->submitForm('task_create_submit', [
+            'task[title]' => null,
+            'task[content]' => null,
+        ]);
+        assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    }
+
+    public function editPostDataOk(array $params)
+    {
+        $client = clone $params['client'];
+
+        $client->submitForm('task_edit_submit', [
+            'task[title]' => '...',
+            'task[content]' => '...',
+        ]);
+        assertEquals(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
+    }
+
+    public function editPostDataKo(array $params)
+    {
+        $crawler = clone $params['crawler'];
+        $client = clone $params['client'];
+        $client->submitForm('task_edit_submit', [
+            'task[title]' => null,
+            'task[content]' => null,
+        ]);
+        assertEquals(Response::HTTP_INTERNAL_SERVER_ERROR, $client->getResponse()->getStatusCode());
     }
 }

@@ -31,8 +31,8 @@ class TaskRepositoryTest extends KernelTestCase
         $userTasks = $testUser->getTasks();
         $adminTasks = $testAdmin->getTasks();
         // Get tasks for each user & null author tasks from repo
-        $userTasksFromRepo = $this->taskRepository->findByUser($testUser, false);
-        $adminTasksFromRepo = $this->taskRepository->findByUser($testAdmin, true);
+        $userTasksFromRepo = $this->taskRepository->findByUserState($testUser, false);
+        $adminTasksFromRepo = $this->taskRepository->findByUserState($testAdmin, true);
         $nullTasks = $this->taskRepository->findByAuthor(null);
 
         // For user, test if each task is present from repo, and each null author isn't present

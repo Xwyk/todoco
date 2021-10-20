@@ -1,323 +1,277 @@
 <?php
 
 namespace App\Tests\Controller;
-use Symfony\Component\DomCrawler\Crawler;
-use Symfony\Component\HttpFoundation\Response;
+
 use function PHPUnit\Framework\assertEquals;
+use Symfony\Component\HttpFoundation\Response;
 
 class TaskControllerAdminTest extends TaskControllerTest
 {
-
     public function loadEntryPoints(): array
     {
         return [
             // ADMIN PART
-            "testTaskListGetAdm" => [
+            'testTaskListGetAdm' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK,
-                    "additionalCheck" => [
-                        "checkTaskNumber"
-                    ]
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_OK,
+                    'additionalCheck' => [
+                        'checkTaskNumber',
+                    ],
+                ],
             ],
-            "testTaskCreateGetAdm" => [
+            'testTaskCreateGetAdm' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks/create",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks/create',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_OK,
+                    'additionalCheck' => [
+                        'createPostDataOk',
+                        'createPostDataKo',
+                    ],
+                ],
             ],
-            "testTaskCreatePostAdmDataOK" => [
+            'testTaskCreatePostAdm' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/create",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/create',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_OK,
+                ],
             ],
-            "testTaskCreatePostAdmDataKO" => [
+            'testTaskEditGetAdmIdOk' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/create",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_UNPROCESSABLE_ENTITY
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks/'.self::ADMIN_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_OK,
+                    'additionalCheck' => [
+                        'editPostDataOk',
+                        'editPostDataKo',
+                    ],
+                ],
             ],
-            "testTaskEditGetAdmIdOk" => [
+            'testTaskEditGetAdmIdNotValid' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks/".self::ADMIN_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks/'.self::DEFAULT_FAKE_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NOT_FOUND,
+                ],
             ],
-            "testTaskEditGetAdmIdNotValid" => [
+            'testTaskEditGetAdmIdNotBelong' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NOT_FOUND
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks/'.self::ADMIN_BAD_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FORBIDDEN,
+                ],
             ],
-            "testTaskEditGetAdmIdNotBelong" => [
+            'testTaskEditGetAdmAnonymousTask' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks/".self::ADMIN_BAD_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_OK,
+                    'additionalCheck' => [
+                        'editPostDataOk',
+                        'editPostDataKo',
+                    ],
+                ],
             ],
-            "testTaskEditGetAdmAnonymousTask" => [
+            'testTaskEditGetAdmIdNotValidDataOk' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/'.self::DEFAULT_FAKE_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NOT_FOUND,
+                ],
             ],
-            "testTaskEditPostAdmIdOkDataOk" => [
+            'testTaskEditGetAdmIdNotValidDataKo' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::ADMIN_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/'.self::DEFAULT_FAKE_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NOT_FOUND,
+                ],
             ],
-            "testTaskEditPostAdmIdOkDataKo" => [
+            'testTaskEditGetAdmIdNotBelongDataOk' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::ADMIN_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_UNPROCESSABLE_ENTITY
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/'.self::USER_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FORBIDDEN,
+                ],
             ],
-            "testTaskEditGetAdmIdNotValidDataOk" => [
+            'testTaskEditGetAdmIdNotBelongDataKo' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NOT_FOUND
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/'.self::USER_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FORBIDDEN,
+                ],
             ],
-            "testTaskEditGetAdmIdNotValidDataKo" => [
+            'testTaskTogglePutAdmIdOk' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NOT_FOUND
-                ]
+                    'type' => 'PUT',
+                    'url' => '/tasks/'.self::ADMIN_TASK_ID.'/toggle',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_OK,
+                ],
             ],
-            "testTaskEditGetAdmIdNotBelongDataOk" => [
+            'testTaskTogglePutAdmIdNotValid' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::USER_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN
-                ]
+                    'type' => 'PUT',
+                    'url' => '/tasks/'.self::DEFAULT_FAKE_TASK_ID.'/toggle',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NOT_FOUND,
+                ],
             ],
-            "testTaskEditGetAdmIdNotBelongDataKo" => [
+            'testTaskTogglePutAdmIdNotBelong' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::USER_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN
-                ]
+                    'type' => 'PUT',
+                    'url' => '/tasks/'.self::USER_TASK_ID.'/toggle',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FORBIDDEN,
+                ],
             ],
-            "testTaskEditGetAdmAnonymousTaskDataOk" => [
+            'testTaskTogglePutAdmAnonymousTask' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK
-                ]
+                    'type' => 'PUT',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/toggle',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_OK,
+                ],
             ],
-            "testTaskEditGetAdmAnonymousTaskDataKo" => [
+            'testTaskDeleteDeleteAdmIdOk' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_UNPROCESSABLE_ENTITY
-                ]
+                    'type' => 'DELETE',
+                    'url' => '/tasks/'.self::ADMIN_TASK_ID.'/delete',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NO_CONTENT,
+                ],
             ],
-            "testTaskTogglePutAdmIdOk" => [
+            'testTaskDeleteDeleteAdmIdNotValid' => [
                 [
-                    "type" => "PUT",
-                    "url" => "/tasks/".self::ADMIN_TASK_ID."/toggle",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK
-                ]
+                    'type' => 'DELETE',
+                    'url' => '/tasks/'.self::DEFAULT_FAKE_TASK_ID.'/delete',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NOT_FOUND,
+                ],
             ],
-            "testTaskTogglePutAdmIdNotValid" => [
+            'testTaskDeleteDeleteAdmIdNotBelong' => [
                 [
-                    "type" => "PUT",
-                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID."/toggle",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NOT_FOUND
-                ]
+                    'type' => 'DELETE',
+                    'url' => '/tasks/'.self::USER_TASK_ID.'/delete',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FORBIDDEN,
+                ],
             ],
-            "testTaskTogglePutAdmIdNotBelong" => [
+            'testTaskDeleteDeleteAdmAnonymousTask' => [
                 [
-                    "type" => "PUT",
-                    "url" => "/tasks/".self::USER_TASK_ID."/toggle",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN
-                ]
+                    'type' => 'DELETE',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/delete',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => 'ADMIN',
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NO_CONTENT,
+                ],
             ],
-            "testTaskTogglePutAdmAnonymousTask" => [
-                [
-                    "type" => "PUT",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/toggle",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_OK
-                ]
-            ],
-            "testTaskDeleteDeleteAdmIdOk" => [
-                [
-                    "type" => "DELETE",
-                    "url" => "/tasks/".self::ADMIN_TASK_ID."/delete",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NO_CONTENT
-                ]
-            ],
-            "testTaskDeleteDeleteAdmIdNotValid" => [
-                [
-                    "type" => "DELETE",
-                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID."/delete",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NOT_FOUND
-                ]
-            ],
-            "testTaskDeleteDeleteAdmIdNotBelong" => [
-                [
-                    "type" => "DELETE",
-                    "url" => "/tasks/".self::USER_TASK_ID."/delete",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FORBIDDEN
-                ]
-            ],
-            "testTaskDeleteDeleteAdmAnonymousTask" => [
-                [
-                    "type" => "DELETE",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/delete",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => "ADMIN",
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NO_CONTENT
-                ]
-            ]
         ];
     }
 
-    public function checkRedirectionShowTasksNotLogged(Crawler $crawler){
+    public function checkRedirectionShowTasksNotLogged(array $params)
+    {
+        $crawler = $params['crawler'];
         $crawler
             ->filter('body')
             ->reduce(function ($node, $i) {
-                assertEquals("Redirecting to /login.", $node->text());
+                assertEquals('Redirecting to /login.', $node->text());
             })
             ->first()
         ;
     }
 
-    public function checkUserTasksShowTasksAsUser(Crawler $crawler)
+    public function checkUserTasksShowTasksAsUser(array $params)
     {
+        $crawler = $params['crawler'];
         // Check tasks number
         assertEquals(self::USER_TASKS, $crawler->filter('.task')->count());
 //        $crawler
@@ -329,13 +283,61 @@ class TaskControllerAdminTest extends TaskControllerTest
 //        ;
     }
 
-    public function checkAnonymousTasksShow(Crawler $crawler)
+    public function checkAnonymousTasksShow(array $params)
     {
-
     }
 
-    public function checkTaskNumber(Crawler $crawler)
+    public function checkTaskNumber(array $params)
     {
+        $crawler = $params['crawler'];
         assertEquals(self::ADMIN_TASKS + self::ANONYMOUS_TASKS, $crawler->filter('.task')->count());
     }
+
+    public function createPostDataOk(array $params)
+    {
+        $client = clone $params['client'];
+
+        $client->submitForm('task_create_submit', [
+            'task[title]' => '...',
+            'task[content]' => '...',
+        ]);
+        assertEquals(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
+    }
+
+    public function createPostDataKo(array $params)
+    {
+        $crawler = clone $params['crawler'];
+        $client = clone $params['client'];
+        $client->submitForm('task_create_submit', [
+            'task[title]' => null,
+            'task[content]' => null,
+        ]);
+        assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    }
+
+    public function editPostDataOk(array $params)
+    {
+        $client = clone $params['client'];
+
+        $client->submitForm('task_edit_submit', [
+            'task[title]' => '...',
+            'task[content]' => '...',
+        ]);
+        assertEquals(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
+    }
+
+    public function editPostDataKo(array $params)
+    {
+        $crawler = clone $params['crawler'];
+        $client = clone $params['client'];
+        $client->submitForm('task_edit_submit', [
+            'task[title]' => null,
+            'task[content]' => null,
+        ]);
+        assertEquals(Response::HTTP_INTERNAL_SERVER_ERROR, $client->getResponse()->getStatusCode());
+    }
+
+
+
+
 }

@@ -1,5 +1,5 @@
 # ToDoList
-
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/d2bee3094bbe4095811c9b4f55558628)](https://www.codacy.com/gh/Xwyk/todoco/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Xwyk/todoco&amp;utm_campaign=Badge_Grade)
 ## How to install application locally
 1.  Clone or download the project
 ```

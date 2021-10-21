@@ -44,6 +44,7 @@ abstract class XwykWebTestCase extends WebTestCase implements XwykWebTestCaseInt
         );
         $statusCode = $client->getResponse()->getStatusCode();
         $this->assertEquals($expectedCode, $statusCode);
+
         return ['client' => $client, 'crawler' => $crawler];
     }
 

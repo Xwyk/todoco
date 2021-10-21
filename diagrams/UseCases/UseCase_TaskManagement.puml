@@ -5,14 +5,17 @@ User    <<operator>> as user
 
 rectangle "Products Management" {
   (List tasks) as listTasks
-  (Get task details) as getDetails
+  (Edit task) as editTask
+  (Mark task as done) as markDone
   (authentication) as auth
 }
 
 user --> listTasks
-user --> getDetails
+user --> editTask
+user --> markDone
 
 listTasks ..> auth : <<include>>
-getDetails ..> auth : <<include>>
+editTask ..> auth : <<include>>
+markDone ..> auth : <<include>>
 
 @enduml

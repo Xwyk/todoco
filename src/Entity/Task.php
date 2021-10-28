@@ -23,7 +23,7 @@ class Task
      * @ORM\Column(type="datetime_immutable")
      */
     private $createdAt;
-
+    private $TOTO;
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank

@@ -10,8 +10,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class UserVoter extends Voter
 {
     public const USER_EDIT = 'USER_EDIT';
-    public const USER_SHOW = 'USER_SHOW';
-    public const USER_DELETE = 'USER_DELETE';
 
     protected function supports(string $attribute, $subject): bool
     {
@@ -21,8 +19,6 @@ class UserVoter extends Voter
             $attribute,
             [
                 self::USER_EDIT,
-                self::USER_SHOW,
-                self::USER_DELETE,
             ]
         )
             && ($subject instanceof User || null == $subject);
@@ -39,18 +35,11 @@ class UserVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::USER_EDIT:
-            case self::USER_SHOW:
                 if (!$subject instanceof User) {
                     return false;
                 }
 
                 return in_array('ROLE_ADMIN', $user->getRoles()) || $user === $subject;
-            case self::USER_DELETE:
-                if (!$subject instanceof User) {
-                    return false;
-                }
-
-                return in_array('ROLE_ADMIN', $user->getRoles());
         }
 
         return false;

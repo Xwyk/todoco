@@ -1,16 +1,12 @@
 <?php
 
-
 namespace App\Tests\Manager;
-
 
 use App\Entity\User;
 use App\Manager\UserManager;
-use PHPUnit\Framework\TestCase;
+use function PHPUnit\Framework\assertTrue;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use function PHPUnit\Framework\assertEquals;
-use function PHPUnit\Framework\assertTrue;
 
 class UserManagerTest extends KernelTestCase
 {
@@ -18,7 +14,7 @@ class UserManagerTest extends KernelTestCase
     protected $passwordHasher;
 
     /**
-     * Boot Kernel and get UserManager instance before testing
+     * Boot Kernel and get UserManager instance before testing.
      */
     protected function setUp(): void
     {
@@ -27,10 +23,11 @@ class UserManagerTest extends KernelTestCase
         $this->passwordHasher = static::getContainer()->get(UserPasswordHasherInterface::class);
     }
 
-    public function testSetPassword(){
+    public function testSetPassword()
+    {
         $user = new User();
-        $plainPassword = "toto";
+        $plainPassword = 'toto';
         $this->userManager->setPassword($user, $plainPassword);
-        assertTrue($this->passwordHasher->isPasswordValid($user, "toto"));
+        assertTrue($this->passwordHasher->isPasswordValid($user, 'toto'));
     }
 }

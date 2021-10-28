@@ -64,7 +64,6 @@ class TaskControllerUserTest extends TaskControllerTest
                     'authenticated' => 'USER',
                     'content' => '',
                     'expectedCode' => Response::HTTP_NOT_FOUND,
-
                 ],
             ],
             'testTaskEditGetUsrIdNotBelong' => [

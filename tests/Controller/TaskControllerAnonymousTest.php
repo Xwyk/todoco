@@ -6,238 +6,237 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TaskControllerAnonymousTest extends TaskControllerTest
 {
-
     public function loadEntryPoints(): array
     {
         return [
-            "testTaskListGetAno" => [
+            'testTaskListGetAno' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FOUND,
+                ],
             ],
-            "testTaskCreateGetAno" => [
+            'testTaskCreateGetAno' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks/create",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks/create',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FOUND,
+                ],
             ],
-            "testTaskCreatePostAnoDataOK" => [
+            'testTaskCreatePostAnoDataOK' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/create",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/create',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FOUND,
+                ],
             ],
-            "testTaskCreatePostAnoDataKO" => [
+            'testTaskCreatePostAnoDataKO' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/create",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/create',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FOUND,
+                ],
             ],
-            "testTaskEditGetAnoIdOk" => [
+            'testTaskEditGetAnoIdOk' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FOUND,
+                ],
             ],
-            "testTaskEditGetAnoIdNotValid" => [
+            'testTaskEditGetAnoIdNotValid' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NOT_FOUND
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks/'.self::DEFAULT_FAKE_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NOT_FOUND,
+                ],
             ],
-            "testTaskEditGetAnoAnonymousTask" => [
+            'testTaskEditGetAnoAnonymousTask' => [
                 [
-                    "type" => "GET",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND
-                ]
+                    'type' => 'GET',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FOUND,
+                ],
             ],
-            "testTaskEditPostAnoIdOkDataOk" => [
+            'testTaskEditPostAnoIdOkDataOk' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FOUND,
+                ],
             ],
-            "testTaskEditPostAnoIdOkDataKo" => [
+            'testTaskEditPostAnoIdOkDataKo' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FOUND,
+                ],
             ],
-            "testTaskEditGetAnoIdNotValidDataOk" => [
+            'testTaskEditGetAnoIdNotValidDataOk' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NOT_FOUND
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/'.self::DEFAULT_FAKE_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NOT_FOUND,
+                ],
             ],
-            "testTaskEditGetAnoIdNotValidDataKo" => [
+            'testTaskEditGetAnoIdNotValidDataKo' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NOT_FOUND
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/'.self::DEFAULT_FAKE_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NOT_FOUND,
+                ],
             ],
-            "testTaskEditGetAnoAnonymousTaskDataOk" => [
+            'testTaskEditGetAnoAnonymousTaskDataOk' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FOUND,
+                ],
             ],
-            "testTaskEditGetAnoAnonymousTaskDataKo" => [
+            'testTaskEditGetAnoAnonymousTaskDataKo' => [
                 [
-                    "type" => "POST",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/edit",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND
-                ]
+                    'type' => 'POST',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/edit',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FOUND,
+                ],
             ],
-            "testTaskTogglePutAnoIdOk" => [
+            'testTaskTogglePutAnoIdOk' => [
                 [
-                    "type" => "PUT",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/toggle",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND
-                ]
+                    'type' => 'PUT',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/toggle',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FOUND,
+                ],
             ],
-            "testTaskTogglePutAnoIdNotValid" => [
+            'testTaskTogglePutAnoIdNotValid' => [
                 [
-                    "type" => "PUT",
-                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID."/toggle",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NOT_FOUND
-                ]
+                    'type' => 'PUT',
+                    'url' => '/tasks/'.self::DEFAULT_FAKE_TASK_ID.'/toggle',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NOT_FOUND,
+                ],
             ],
-            "testTaskTogglePutAnonymousTask" => [
+            'testTaskTogglePutAnonymousTask' => [
                 [
-                    "type" => "PUT",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/toggle",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND
-                ]
+                    'type' => 'PUT',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/toggle',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FOUND,
+                ],
             ],
-            "testTaskDeleteDeleteAnoIdOk" => [
+            'testTaskDeleteDeleteAnoIdOk' => [
                 [
-                    "type" => "DELETE",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/delete",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND
-                ]
+                    'type' => 'DELETE',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/delete',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FOUND,
+                ],
             ],
-            "testTaskDeleteDeleteAnoIdNotValid" => [
+            'testTaskDeleteDeleteAnoIdNotValid' => [
                 [
-                    "type" => "DELETE",
-                    "url" => "/tasks/".self::DEFAULT_FAKE_TASK_ID."/delete",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_NOT_FOUND
-                ]
+                    'type' => 'DELETE',
+                    'url' => '/tasks/'.self::DEFAULT_FAKE_TASK_ID.'/delete',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_NOT_FOUND,
+                ],
             ],
-            "testTaskDeleteDeleteAnoAnonymousTask" => [
+            'testTaskDeleteDeleteAnoAnonymousTask' => [
                 [
-                    "type" => "DELETE",
-                    "url" => "/tasks/".self::ANONYMOUS_TASK_ID."/delete",
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => null,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_FOUND
-                ]
-            ]
+                    'type' => 'DELETE',
+                    'url' => '/tasks/'.self::ANONYMOUS_TASK_ID.'/delete',
+                    'parameters' => [],
+                    'files' => [],
+                    'server' => [],
+                    'authenticated' => null,
+                    'content' => '',
+                    'expectedCode' => Response::HTTP_FOUND,
+                ],
+            ],
         ];
     }
 }

@@ -1,54 +1,53 @@
 <?php
 
-
 namespace App\Tests\Entity;
-
 
 use App\Entity\Task;
 use App\Entity\User;
-use App\Tests\MethodTestCase;
 use App\Tests\XwykGetSetTestCase;
-use PHPUnit\Framework\TestCase;
 use function PHPUnit\Framework\assertContains;
-use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertNotContains;
 
 class UserTest extends XwykGetSetTestCase
 {
-    const CLASS_NAME = User::class;
-    public function loadSetters(){
-        return[
-            "testUsernameVariable"=>[
+    public const CLASS_NAME = User::class;
+
+    public function loadSetters()
+    {
+        return [
+            'testUsernameVariable' => [
                 [
-                    "class" => self::CLASS_NAME,
-                    "variable" => "username",
-                    "value" => "toto"
-                ]
+                    'class' => self::CLASS_NAME,
+                    'variable' => 'username',
+                    'value' => 'toto',
+                ],
             ],
-            "testPasswordVariable"=>[
+            'testPasswordVariable' => [
                 [
-                    "class" => self::CLASS_NAME,
-                    "variable" => "password",
-                    "value" => "totopassword"
-                ]
+                    'class' => self::CLASS_NAME,
+                    'variable' => 'password',
+                    'value' => 'totopassword',
+                ],
             ],
-            "testEmailVariable"=>[
+            'testEmailVariable' => [
                 [
-                    "class" => self::CLASS_NAME,
-                    "variable" => "email",
-                    "value" => "test@todoco.fr"
-                ]
+                    'class' => self::CLASS_NAME,
+                    'variable' => 'email',
+                    'value' => 'test@todoco.fr',
+                ],
             ],
-            "testRoleVariable"=>[
+            'testRoleVariable' => [
                 [
-                    "class" => self::CLASS_NAME,
-                    "variable" => "role",
-                    "value" => "ROLE_ADMIN"
-                ]
+                    'class' => self::CLASS_NAME,
+                    'variable' => 'role',
+                    'value' => 'ROLE_ADMIN',
+                ],
             ],
         ];
     }
-    public function testTaskVariable(){
+
+    public function testTaskVariable()
+    {
         $task = new Task();
         $user = new User();
         $user->addTask($task);

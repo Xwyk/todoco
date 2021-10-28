@@ -8,8 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SecurityControllerTest extends XwykWebTestCase
 {
-
-    const USER_LOGIN = 'user1';
+    public const USER_LOGIN = 'user1';
 
     public function loadEntryPoints()
     {

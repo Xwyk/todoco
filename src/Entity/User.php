@@ -29,7 +29,8 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Unique()
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     private $username;
 
@@ -40,6 +41,8 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull()
+     * @Assert\NotBlank
      */
     private $email;
 
@@ -163,7 +166,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         // TODO: Implement @method string getUserIdentifier()
     }
 
-    public function getRole(): string
+    public function getRole(): ?string
     {
         return $this->role;
     }

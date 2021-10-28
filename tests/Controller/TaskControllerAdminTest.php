@@ -336,8 +336,4 @@ class TaskControllerAdminTest extends TaskControllerTest
         ]);
         assertEquals(Response::HTTP_INTERNAL_SERVER_ERROR, $client->getResponse()->getStatusCode());
     }
-
-
-
-
 }

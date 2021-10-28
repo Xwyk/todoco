@@ -274,7 +274,6 @@ class TaskControllerUserTest extends TaskControllerTest
 
     public function createPostDataKo(array $params)
     {
-        $crawler = clone $params['crawler'];
         $client = clone $params['client'];
         $client->submitForm('task_create_submit', [
             'task[title]' => null,
@@ -296,7 +295,6 @@ class TaskControllerUserTest extends TaskControllerTest
 
     public function editPostDataKo(array $params)
     {
-        $crawler = clone $params['crawler'];
         $client = clone $params['client'];
         $client->submitForm('task_edit_submit', [
             'task[title]' => null,

@@ -274,13 +274,6 @@ class TaskControllerAdminTest extends TaskControllerTest
         $crawler = $params['crawler'];
         // Check tasks number
         assertEquals(self::USER_TASKS, $crawler->filter('.task')->count());
-//        $crawler
-//            ->filter('.task')
-//            ->reduce(function ($node, $i) {
-//                dump($node);
-//            })
-//            ->first()
-//        ;
     }
 
     public function checkAnonymousTasksShow(array $params)
@@ -306,7 +299,6 @@ class TaskControllerAdminTest extends TaskControllerTest
 
     public function createPostDataKo(array $params)
     {
-        $crawler = clone $params['crawler'];
         $client = clone $params['client'];
         $client->submitForm('task_create_submit', [
             'task[title]' => null,
@@ -328,7 +320,6 @@ class TaskControllerAdminTest extends TaskControllerTest
 
     public function editPostDataKo(array $params)
     {
-        $crawler = clone $params['crawler'];
         $client = clone $params['client'];
         $client->submitForm('task_edit_submit', [
             'task[title]' => null,

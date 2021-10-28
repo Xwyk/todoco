@@ -9,11 +9,6 @@ use function PHPUnit\Framework\assertEquals;
 
 class TaskTest extends XwykGetSetTestCase
 {
-    private $createdAt;
-    private $title;
-    private $content;
-    private $isDone;
-    private $author;
     public const CLASS_NAME = Task::class;
 
     public function loadSetters()

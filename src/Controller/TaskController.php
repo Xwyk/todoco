@@ -44,7 +44,7 @@ class TaskController extends AbstractController
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function create(Request $request, EntityManagerInterface $manager, ValidatorInterface $validator)
+    public function create(Request $request, EntityManagerInterface $manager)
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -99,8 +99,6 @@ class TaskController extends AbstractController
         $manager->persist($task);
         $manager->flush();
 
-//        $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
-
         return new Response('OK', Response::HTTP_OK);
     }
 
@@ -119,8 +117,6 @@ class TaskController extends AbstractController
     {
         $manager->remove($task);
         $manager->flush();
-
-//        $this->addFlash('success', 'La tâche a bien été supprimée.');
 
         return new Response('OK', Response::HTTP_NO_CONTENT);
     }

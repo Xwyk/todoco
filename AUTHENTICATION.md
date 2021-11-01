@@ -192,3 +192,29 @@ change below code with your logic
         return false;
     }
 ```
+
+### Use voter
+Once voter is developed, to use it in your code, you need to use :
+* @IsGranted("ROLE_NAME") from Sensio\Bundle\FrameworkExtraBundle\Configuration) in your controller method declaration 
+* $security->isGranted("ROLE_NAME) from Symfony\Component\Security\Core directly in your code
+```
+    /**
+      * @Route("/tasks/create", name="task_create", methods={"GET","POST"})
+      * @IsGranted("ROLE_USER")
+      */
+    public function create()
+```
+OR
+```
+    /**
+      * @Route("/tasks/create", name="task_create", methods={"GET","POST"})
+      * @IsGranted("ROLE_USER")
+      */
+    public function create(Security $security){
+        if (!$security->isGranted("ROLE_USER"){
+            // Do something
+        }
+    }
+```
+In the first case, you will get 401 or 403 before your code execution. Useful to reduce access to whole functionnality.
+In the second case, your code will be executed, and you can choose what to do if user's rights aren't enough.

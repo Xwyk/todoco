@@ -1,7 +1,8 @@
 # How to contribute to the project
 
-## Create a local copy
+## Create a local copy or Fork Project
 Use [README.md](https://github.com/xwyk/todoco/blob/master/README.md) to install a clone of the project on local.
+Or see [Github explanations](https://docs.github.com/en/get-started/quickstart/fork-a-repo) to fork project.
 
 ## Issue
 Please create a new issue, if needed linked to a new Milestone, to describe what will be developed and the due date.

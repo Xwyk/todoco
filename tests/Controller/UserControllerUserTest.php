@@ -2,8 +2,8 @@
 
 namespace App\Tests\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use function PHPUnit\Framework\assertEquals;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserControllerUserTest extends UserControllerTest
 {

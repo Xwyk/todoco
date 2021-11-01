@@ -28,4 +28,4 @@
 ###< friendsofphp/php-cs-fixer ###
 
 ./*.cache
-./coverage
+/coverage/

@@ -85,7 +85,11 @@ jobs:
 
       # —— Tests ✅ ———————————————————————————————————————————————————————————
       - name: Run functionnal and unit tests
-        run: vendor/bin/phpunit --testdox --coverage-clover=coverage-result.xml --log-junit=execution-result.xml --configuration phpunit.xml.dist
+        run: vendor/bin/phpunit --coverage-clover=coverage-result.xml --log-junit=execution-result.xml --configuration phpunit.xml.dist
+
+      # —— Tests ✅ ———————————————————————————————————————————————————————————
+      - name: test ls
+        run: ls -la
 
       # —— SonarQube 🎵 ——————————————————————————————————————————————————————————
       - name: Run SonarQube analysis

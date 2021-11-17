@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Authenticated user" as user
+actor System                as system
+actor Database              as db
+
+user  -> system  : go to ./tasks URL
+alt check if user is admin
+system -> db : request for user tasks + anonymous tasks
+db --> system : return tasks
+else
+system -> db : request for user tasks
+db --> system : return tasks
+end
+user  <-- system : display tasks list
+
+@enduml

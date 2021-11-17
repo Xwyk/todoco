@@ -1,0 +1,26 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Authenticated user" as user
+actor System                as system
+actor Database              as db
+
+user  -> system  : go on /task/edit
+system -> system : check if task belong to user
+alt if task belong to user
+system --> user : displays edit interface
+user -> system : edit task informations
+system -> system : validate tasks informations
+alt if informations are valid
+system -> db : send modifications
+system <--db : return OK
+system --> user : route to tasks list
+else
+system --> user : displays error(s)
+end
+else
+system --> user : displays 403
+end
+@enduml

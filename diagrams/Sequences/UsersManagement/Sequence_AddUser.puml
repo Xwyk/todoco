@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Authenticated client" as client
+actor System                as system
+actor Database              as db
+
+client  -> system  : send HTTP POST /api/users/{id} with JSON object
+system -> system  : create User object from JSON object
+system -> system  : check if user is valid
+alt User is valid
+    system -> db      : Persist User object
+    system <-- db     : return data
+    client  <-- system : return 201 status code
+else
+    client  <-- system : return 400 status code
+end
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor User as user
+actor System as system
+actor Database as db
+
+user  -> system  : login with username & password on /login url
+system -> db : get user object
+alt if user exist
+db --> system : return user
+system -> system : check password
+alt if password is valid
+system -> system : log in user
+system --> user : redirect to homepage
+else
+system --> user : return credentials error
+end
+else
+db --> system : return no user
+system --> user : return credentials error
+end
+@enduml

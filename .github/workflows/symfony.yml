@@ -87,16 +87,12 @@ jobs:
       - name: Run functionnal and unit tests
         run: vendor/bin/phpunit --coverage-clover=coverage-result.xml --log-junit=execution-result.xml --configuration phpunit.xml.dist
 
-      # —— Tests ✅ ———————————————————————————————————————————————————————————
-      - name: test ls
-        run: ls -la
-
       # —— SonarQube 🎵 ——————————————————————————————————————————————————————————
-      - name: Run SonarQube analysis
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        #- name: Run SonarQube analysis
+        #uses: sonarsource/sonarqube-scan-action@master
+          #env:
+          #SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        #SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         # If you wish to fail your job when the Quality Gate is red, uncomment the
         # following lines. This would typically be used to fail a deployment.
         # - uses: sonarsource/sonarqube-quality-gate-action@master

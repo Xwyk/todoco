@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Authenticated admin" as admin
+actor System                as system
+actor Database              as db
+
+admin  -> system  : go to /users/{id]/edit
+system -> db      : request for User object from {id}
+system <-- db     : return data
+
+alt User exists
+      admin  <-- system : display user informations
+      admin  -> system : edit informations
+      system -> system : check data validity
+      alt Data is valid
+            system -> db : update object informations
+            db --> system : return ok
+            system --> admin : redirect to /users
+      else Data isn't valid
+      end
+else User doesn't exists
+  admin  <-- system : return 404 status code
+end
+
+@enduml

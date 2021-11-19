@@ -4,10 +4,11 @@ left to right direction
 
 Admin    <<operator>> as admin
 User     <<operator>> as user
+
 rectangle "Users Management" {
   (List users) as listUsers
-  (Add user) as addUser
   (Edit user details) as editUser
+  (Add user) as addUser
   (authentication) as auth
 }
 

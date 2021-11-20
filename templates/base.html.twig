@@ -40,8 +40,8 @@
             <div class="row">
                 <a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a>
 
-                {% if is_granted("ROLE_ADMIN") %}
-                    <a href="{{ path('user_list') }}" class="pull-right btn btn-danger">Utilisateurs</a>
+                {% if 'ROLE_ADMIN' in app.user.getroles(TRUE) %}
+                    <a href="{{ path('user_list') }}" class="btn btn-primary">Gérer les utilisateurs</a>
                 {% endif %}
 
                 {% if app.user %}

@@ -1,0 +1,48 @@
+
+
+Code Coverage Report:      
+  2021-11-21 11:36:32      
+                           
+ Summary:                  
+  Classes: 71.43% (10/14)  
+  Methods: 91.23% (52/57)  
+  Lines:   96.48% (192/199)
+
+App\Controller\HomeController
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  2/  2)
+App\Controller\SecurityController
+  Methods:   0.00% ( 0/ 2)   Lines:  75.00% (  6/  8)
+App\Controller\TaskController
+  Methods: 100.00% ( 5/ 5)   Lines: 100.00% ( 28/ 28)
+App\Controller\UserController
+  Methods: 100.00% ( 3/ 3)   Lines: 100.00% ( 23/ 23)
+App\DataFixtures\TaskFixtures
+  Methods:  ( 0/ 0)   Lines:  (  0/  0)
+App\DataFixtures\UserFixtures
+  Methods:  ( 0/ 0)   Lines:  (  0/  0)
+App\Entity\Task
+  Methods: 100.00% (14/14)   Lines: 100.00% ( 25/ 25)
+App\Entity\User
+  Methods: 100.00% (14/14)   Lines: 100.00% ( 25/ 25)
+App\Form\TaskType
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  6/  6)
+App\Form\UserType
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% ( 15/ 15)
+App\Kernel
+  Methods:  ( 0/ 0)   Lines:  (  0/  0)
+App\Manager\UserManager
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  6/  6)
+App\Repository\TaskRepository
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% ( 11/ 11)
+App\Repository\UserRepository
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  2/  2)
+App\Security\UserAuthenticator
+  Methods:  75.00% ( 3/ 4)   Lines:  92.31% ( 12/ 13)
+App\Security\Voter\TaskVoter
+  Methods:  66.67% ( 2/ 3)   Lines:  91.30% ( 21/ 23)
+App\Security\Voter\UserVoter
+  Methods:  50.00% ( 1/ 2)   Lines:  83.33% ( 10/ 12)
+App\Tests\XwykGetSetTestCase
+  Methods:  ( 0/ 0)   Lines:  (  0/  0)
+App\Tests\XwykWebTestCase
+  Methods:  ( 0/ 0)   Lines:  (  0/  0)

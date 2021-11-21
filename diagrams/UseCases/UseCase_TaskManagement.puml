@@ -3,7 +3,7 @@ left to right direction
 
 User    <<operator>> as user
 
-rectangle "Products Management" {
+rectangle "Tasks Management" {
   (List tasks) as listTasks
   (Edit task) as editTask
   (Mark task as done) as markDone

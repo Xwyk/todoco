@@ -30,3 +30,6 @@
 ###> sonarqube ###
 /.scannerwork
 ###< sonarqube ###
+
+
+/tests/_reports/

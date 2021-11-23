@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block header_title %}
+    <h1>Accès non authorisé</h1>
+{% endblock %}
+
+{% block body %}
+
+    <p>Vous tentez d'accéder à une page non authorisée. Souhaitez-vous revenir à <href src="{{ path('home') }}">l'accueil</href> ?</p>
+{% endblock %}

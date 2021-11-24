@@ -20,6 +20,7 @@ alt User exists
             db --> system : return ok
             system --> admin : redirect to /users
       else Data isn't valid
+            system --> admin : displays errors on form
       end
 else User doesn't exists
   admin  <-- system : return 404 status code

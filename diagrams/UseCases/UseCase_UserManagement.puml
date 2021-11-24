@@ -1,16 +1,14 @@
 @startuml
 
-left to right direction
-
 Admin    <<operator>> as admin
 User     <<operator>> as user
 
-rectangle "Users Management" {
-  (List users) as listUsers
-  (Edit user details) as editUser
-  (Add user) as addUser
-  (authentication) as auth
-}
+admin --|> user : <<extends>>
+
+(Add user) as addUser
+(List users) as listUsers
+(Edit user details) as editUser
+(authentication) as auth
 
 admin -> listUsers
 admin -> editUser
